@@ -5,7 +5,6 @@
     --grape: #94618E;
     --sand: #f4decb;
     --shell: #F8EEE7;
-
 }
 
 * {
@@ -15,7 +14,20 @@
 }
 
 body {
+    background: #f0f2f5;
     font-family: 'Poppins', sans-serif;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
 }
 
 /* Header ==========================================*/
@@ -50,6 +62,8 @@ header img {
 
     cursor: pointer;
 
+    height: 90px;
+
     padding: 1rem;
     background: #FFF;
     border-radius: 5px;
@@ -83,7 +97,15 @@ header img {
 
 #data-table {
     width: 100%;
-    border-spacing: 0 1rem;
+    border-spacing: 0 0.5rem;
+}
+
+table tbody tr {
+    opacity: 0.8;
+}
+
+table tbody tr:hover {
+opacity: 1;
 }
 
 table thead tr th:first-child,
@@ -98,12 +120,194 @@ table tbody tr td:last-child {
 
 table thead tr th {
     background: var(--sand);
+    color: var(--purple2);
     padding: 1rem 1rem;
+    text-align: left;
 }
 
 table tbody tr td {
     background: var(--shell);
-    padding: 1rem;
+    color: var(--grape);
+    padding: 0.5rem 0.5rem;
+}
+
+/* Modal ==========================================*/
+.modal-overlay {
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0,0,0,0.7);
+    position: fixed;
+    top: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 999;
+}
+
+.modal {
+    background: #f0f2f5;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Forms General ==========================================*/
+.forms {
+    max-width: 500px;
+}
+
+.forms h2{
+    margin-top: 0;
+    color: var(--grape);
+}
+
+.forms input {
+    border: 1px solid var(--sand);
+    border-radius: 0.2rem;
+
+    padding: 0.8rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+
+    height: 40px;
+}
+
+.forms textarea {
+    border: 1px solid var(--sand);
+    border-radius: 0.2rem;
+
+    padding: 0.8rem;
+    width: 100%;
+
+    resize: none;
+}
+
+.input-group {
+    margin-top: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input-group button,
+.input-group .button {
+    width: 48%;
+}
+
+/* Form Books ==========================================*/
+#modal-overlay-books {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#modal-overlay-books.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+#form-books .category-publisher {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+#form-books .category-publisher .category,
+#form-books .category-publisher .publisher {
+    width: 100%;
+}
+
+#form-books .published-pages-isbn {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+#form-books .published-pages-isbn small {
+    margin-left: 1rem ;
+    opacity: 0.6;    
+}
+#form-books .published-pages-isbn .published, 
+#form-books .published-pages-isbn .pages,
+#form-books .published-pages-isbn .isbn {
+    width: 100%;
+}
+
+/* Form Friends ==========================================*/
+#modal-overlay-friends {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#modal-overlay-friends.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Form Authors ==========================================*/
+#modal-overlay-authors {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#modal-overlay-authors.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Form Authors ==========================================*/
+#modal-overlay-wishlist {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#modal-overlay-wishlist.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Buttons & Links =================================*/
+a {
+    text-decoration: none;
+}
+
+button {
+    color: rgb(59, 202, 59);
+    border: 2px solid rgb(59, 202, 59);;
+
+    height: 50px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0.6;
+}
+
+button:hover {
+    opacity: 1;
+}
+
+.button.cancel {
+    color: coral;
+    border: 2px coral solid;
+
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0.6;
+}
+
+.button.cancel:hover {
+    opacity: 1;
 }
 
 /* Footer ==========================================*/
@@ -113,11 +317,15 @@ footer {
     justify-content: center;
 }
 
-/* Responsive ==========================================*/
+/* Responsive ======================================*/
 @media(min-width: 900px) {
     #cards {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 1rem;
+    }
+
+    #form-friends {
+        width: 400px;
     }
 }
