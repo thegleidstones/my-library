@@ -24,24 +24,34 @@
 
     <main class="container">
         <section id="cards">
-            <div class="card">
-                <h2>+Livros</h2>
-                <img src="./assets/book-01.svg" alt="">
-            </div>
-            <div class="card">
-                <h2>+Autores</h2>
-                <img src="./assets/author-01.svg" alt="Autores">
-            </div>
+            <a href="#" onclick="Modal.open('modal-overlay-books')">
+                <div class="card">
+                    <h2>+Livros</h2>
+                    <img src="./assets/book-01.svg" alt="">
+                </div>
 
-            <div class="card">
-                <h2>+Amigos</h2>
-                <img src="./assets/friend-01.svg" alt="Amigos">
-            </div>
+            </a>
 
-            <div class="card">
-                <h2>+Lista de Desejos</h2>
-                <img src="./assets/wishlist-01.svg" alt="">
-            </div>
+            <a href="#" onclick="Modal.open('modal-overlay-authors')">
+                <div class="card">
+                    <h2>+Escritores</h2>
+                    <img src="./assets/author-01.svg" alt="Autores">
+                </div>
+            </a>
+
+            <a href="#" onclick="Modal.open('modal-overlay-friends')">
+                <div class="card">
+                    <h2>+Amigos</h2>
+                    <img src="./assets/friend-01.svg" alt="Amigos">
+                </div>
+            </a>
+
+            <a href="#" onclick="Modal.open('modal-overlay-wishlist')">
+                <div class="card">
+                    <h2>+Lista de Desejos</h2>
+                    <img src="./assets/wishlist-01.svg" alt="">
+                </div>
+            </a>
         </section>
 
         <section id="books-authors">
@@ -51,7 +61,9 @@
                         <th>#</th>
                         <th>Livro</th>
                         <th>Autor</th>
+                        <th>Editora</th>
                         <th>Categoria</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,39 +71,191 @@
                         <td>1</td>
                         <td>O problema do ser, do destino e da dor</td>
                         <td>Leon Denis</td>
+                        <td>FEB</td>
                         <td>Espiritismo</td>
+                        <td><img src="./assets/minus.svg" alt="Excluir registro"></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>No invisível</td>
                         <td>Leon Denis</td>
+                        <td>FEB</td>
                         <td>Espiritismo</td>
+                        <td><img src="./assets/minus.svg" alt="Excluir registro"></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>O grande enigma</td>
                         <td>Leon Denis</td>
+                        <td>FEB</td>
                         <td>Espiritismo</td>
+                        <td><img src="./assets/minus.svg" alt="Excluir registro"></td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td>Cristianismo e Espiritismo</td>
                         <td>Leon Denis</td>
+                        <td>FEB</td>
                         <td>Espiritismo</td>
+                        <td><img src="./assets/minus.svg" alt="Excluir registro"></td>
                     </tr>
                 </tbody>
             </table>
         </section>
     </main>
 
+    <!-- Modal & form para cadastrar livros -->
+    <div class="modal-overlay" id="modal-overlay-books">
+        <div class="modal">
+            <div class="forms" id="form-books">
+                <h2>Novo Livro</h2>
+                <form action="">
+                    <div>
+                        <label class="sr-only" for="title">Título</label>
+                        <input type="text" name="title" id="title" placeholder="Título" />
+                    </div>
+                    <div>
+                        <label class="sr-only" for="author">Autor</label>
+                        <input type="text" name="author" id="author" placeholder="Autor/Autores" />
+                    </div>
+                    <div>
+                        <label class="sr-only" for="abstract">Resumo</label>
+                        <textarea name="abstract" id="abstract" placeholder="Resumo do Livro" cols="50"
+                            rows="6"></textarea>
+                    </div>
+                    <div class="category-publisher">
+                        <div class="category">
+                            <label class="sr-only" for="category">Categoria</label>
+                            <input type="text" name="category" id="category" placeholder="Categoria" />
+                        </div>
+                        <div class="publisher">
+                            <label class="sr-only" for="">Editora</label>
+                            <input type="text" name="publisher" id="publisher" placeholder="Editora" />
+                        </div>
+                    </div>
+                    <div class="published-pages-isbn">
+                        <div>
+                            <label class="sr-only" for="published">Publicação</label>
+                            <input type="date" name="published" id="published" />
+                            <small>data de publicação</small>
+                        </div>
+                        <div class="pages">
+                            <label class="sr-only" for="pages">Páginas</label>
+                            <input type="number" name="pages" id="pages" placeholder="Páginas" />
+                        </div>
+                        <div class="isbn">
+                            <label class="sr-only" for="isbn">ISBN</label>
+                            <input type="text" name="isbn" id="isbn" placeholder="ISBN" />
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <a href="#" onclick="Modal.close('modal-overlay-books')" class="button cancel">Cancelar</a>
+                        <button>Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal & form para cadastrar amigos -->
+    <div class="modal-overlay" id="modal-overlay-friends">
+        <div class="modal">
+            <div class="forms" id="form-friends">
+                <h2>Novo Amigo</h2>
+                <form action="">
+                    <div>
+                        <label class="sr-only" for="name">Nome</label>
+                        <input type="text" name="name" id="name" placeholder="Nome" />
+                    </div>
+                    <div>
+                        <label class="sr-only" for="cellphone">Celular</label>
+                        <input type="text" name="cellphone" id="cellphone" placeholder="Celular" />
+                    </div>
+                    <div>
+                        <label class="sr-only" for="email">Email</label>
+                        <input type="email" name="email" id="email" placeholder="email@email.com" />
+                    </div>
+                    <div>
+                        <label class="sr-only" for="instagram">Instagram</label>
+                        <input type="text" name="instagram" id="instagram" placeholder="instagram" />
+                    </div>
+                    <div>
+                        <label class="sr-only" for="address">Endereço</label>
+                        <input type="text" name="address" id="address" placeholder="Endereço" />
+                    </div>
+                    <div class="input-group">
+                        <a href="#" onclick="Modal.close('modal-overlay-friends')" class="button cancel">Cancelar</a>
+                        <button>Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal & form para cadastrar autores -->
+    <div class="modal-overlay" id="modal-overlay-authors">
+        <div class="modal">
+            <div class="forms" id="form-authors">
+                <h2>Novo Escritor</h2>
+                <form action="">
+                    <div>
+                        <label class="sr-only" for="author-name">Nome</label>
+                        <input type="text" name="author-name" id="author-name" placeholder="Nome" />
+                    </div>
+                    <div>
+                        <label class="sr-only" for="abstract">Biografia</label>
+                        <textarea name="abstract" id="abstract" placeholder="Biografia resumida do escritor" cols="50"
+                            rows="6"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <a href="#" onclick="Modal.close('modal-overlay-authors')" class="button cancel">Cancelar</a>
+                        <button>Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal & form para cadastrar os livros da lista de desejos -->
+    <div class="modal-overlay" id="modal-overlay-wishlist">
+        <div class="modal">
+            <div class="forms" id="form-wishlist">
+                <h2>Novo item da lista de desejos</h2>
+                <form action="">
+                    <div>
+                        <label class="sr-only" for="whishlist-title">Título</label>
+                        <input type="text" name="whishlist-title" id="whishlist-title" placeholder="Título" />
+                    </div>
+                    <div>
+                        <label class="sr-only" for="whishlist-author">Autor</label>
+                        <input type="text" name="whishlist-author" id="whishlist-author" placeholder="Autor/Autores" />
+                    </div>
+                    <div>
+                        <label class="sr-only" for="link">Link do livro</label>
+                        <input type="text" name="link" id="link"
+                            placeholder="www.livrariaonline.com.br/livro-desejado" />
+                    </div>
+                    <div class="input-group">
+                        <a href="#" onclick="Modal.close('modal-overlay-wishlist')" class="button cancel">Cancelar</a>
+                        <button>Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div>
-            Icons by <a href="https://freeicons.io/profile/730">Anu Rocks</a> 
+            Icons by <a href="https://freeicons.io/profile/730">Anu Rocks</a>
             and <a href="https://freeicons.io/profile/5596">shivani</a> on <a
                 href="https://freeicons.io">freeicons.io</a>
-            <p><a href="https://iconscout.com/icons/digital-library" target="_blank">Digital Library Icon</a> by <a href="https://iconscout.com/contributors/pro-symbols">Pro Symbols</a> on <a href="https://iconscout.com">Iconscout</a></p>
+            <p><a href="https://iconscout.com/icons/digital-library" target="_blank">Digital Library Icon</a> by <a
+                    href="https://iconscout.com/contributors/pro-symbols">Pro Symbols</a> on <a
+                    href="https://iconscout.com">Iconscout</a></p>
         </div>
     </footer>
+
+    <script src="./scripts.js"></script>
 </body>
 
 </html>
