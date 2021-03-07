@@ -20,9 +20,9 @@ const Friend = {
         return this.friends;
     },
 
-    remove(friend) {
-        this.friends.splice(friend)
-        console.log(this.get())
+    remove(index) {
+        this.friends.splice(index, 1)
+        DOM.callFriendsTable()
     }
 }
 
@@ -38,9 +38,9 @@ const Author = {
         return this.authors
     },
 
-    remove(author) {
-        this.authors.splice(author)
-        console.log(this.get())
+    remove(index) {
+        this.authors.splice(index, 1)
+        DOM.callAuthorsTable()
     }
 }
 
@@ -56,9 +56,9 @@ const Wishlist = {
         return this.wishlists
     },
 
-    remove(wishlist) {
-        this.wishlists.splice(wishlist)
-        console.log(this.get())
+    remove(index) {
+        this.wishlists.splice(index, 1)
+        DOM.callWishlistTable()
     }
 }
 
@@ -74,8 +74,9 @@ const Book = {
         return this.books
     },
 
-    remove(book) {
-        this.books.splice(book)
+    remove(index) {
+        this.books.splice(index, 1)
+        DOM.callBooksTable()
     }
 }
 
@@ -85,11 +86,6 @@ Utils = {
         return `${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`
 
     },
-
-    getKeyByValue(object, value) {
-        return Object.keys(object).find(key => object[key] === value);
-    },
-
 }
 
 FormBooks = {
@@ -281,7 +277,7 @@ FormWishlist = {
         if (wishlistTitle.trim() === "" ||
             wishlistAuthor.trim() === "" || 
             link.trim() === "") {
-                //throw new Error("Por favor, preencha os campos.")
+            throw new Error("Por favor, preencha os campos.")
         }
     },
 
@@ -303,7 +299,6 @@ FormWishlist = {
             alert(error)
         }
     }
-
 }
 
 const DOM = {
@@ -405,46 +400,46 @@ const DOM = {
 
     createBookTableData(book, index) {
         const html = `
-            <td>${index}</td>
+            <td>${index + 1}</td>
             <td>${book.title}</td>
             <td>${book.author}</td>
             <td>${book.publisher}</td>
             <td>${book.category}</td>
-            <td><img src="./assets/minus.svg" alt="Excluir registro"></td>
+            <td><img onclick="Book.remove(${index})" src="./assets/minus.svg" alt="Excluir registro"></td>
         `
         return html
     },
 
     createAuthorTableData(author, index) {
         const html = `
-            <td>${index}</td>
+            <td>${index + 1}</td>
             <td>${author.authorName}</td>
             <td>${author.biografy}</td>
-            <td><img src="./assets/minus.svg" alt="Excluir registro"></td>
+            <td><img onclick="Author.remove(${index})" src="./assets/minus.svg" alt="Excluir registro"></td>
         `
         return html
     },
 
     createFriendTableData(friend, index) {
         const html = `
-            <td>${index}</td>
+            <td>${index + 1}</td>
             <td>${friend.name}</td>
             <td>${friend.cellphone}</td>
             <td>${friend.email}</td>
             <td>${friend.instagram}</td>
             <td>${friend.address}</td>
-            <td><img src="./assets/minus.svg" alt="Excluir registro"></td>
+            <td><img onclick="Friend.remove(${index})" src="./assets/minus.svg" alt="Excluir registro"></td>
         `
         return html
     },
 
     createWishlistTableData(wishlist, index) {
         const html = `
-            <td>${index}</td>
+            <td>${index + 1}</td>
             <td>${wishlist.wishlistTitle}</td>
             <td>${wishlist.wishlistAuthor}</td>
             <td><a href="${wishlist.link}" target="_blank">Visualizar link</a></td>
-            <td><img src="./assets/minus.svg" alt="Excluir registro"></td>
+            <td><img onclick="Wishlist.remove(${index})" src="./assets/minus.svg" alt="Excluir registro"></td>
         `
         return html
 
