@@ -195,7 +195,7 @@ table tbody tr td {
 
 .input-group button,
 .input-group .button {
-    width: 48%;
+    width: 32%;
 }
 
 /* Form Books ==========================================*/
@@ -278,7 +278,8 @@ a {
 
 button {
     color: rgb(59, 202, 59);
-    border: 2px solid rgb(59, 202, 59);;
+    border: 3px solid rgb(59, 202, 59);
+    border-radius: 0.25rem;
 
     height: 50px;
     
@@ -295,7 +296,22 @@ button:hover {
 
 .button.cancel {
     color: coral;
-    border: 2px coral solid;
+    border: 3px coral solid;
+    border-radius: 0.25rem;
+
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0.6;
+}
+
+.button.list {
+    color: var(--grape);
+    border: 3px var(--grape) solid;
+    border-radius: 0.25rem;
 
     height: 50px;
 
@@ -307,6 +323,10 @@ button:hover {
 }
 
 .button.cancel:hover {
+    opacity: 1;
+}
+
+.button.list:hover {
     opacity: 1;
 }
 
