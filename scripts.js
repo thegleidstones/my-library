@@ -162,7 +162,6 @@ FormBooks = {
             let book = FormBooks.formatFields()
             Book.add(book)
             FormBooks.clearFields()
-            Modal.close(DOM.modalOverlay.books)
         } catch (error) {
             alert(error)
         }
@@ -200,7 +199,6 @@ FormAuthors = {
             FormAuthors.validateFields()
             Author.add(FormAuthors.getValues());
             FormAuthors.clearFields()
-            Modal.close(DOM.modalOverlay.authors)
         } catch (error) {
             alert(error)
         }
@@ -251,7 +249,6 @@ FormFriends = {
             FormFriends.validateFields()
             Friend.add(FormFriends.getValues())
             FormFriends.clearFields()
-            Modal.close(DOM.modalOverlay.friends)
         } catch (error) {
             alert(error)
         }
@@ -293,7 +290,6 @@ FormWishlist = {
         FormWishlist.validateFields()
         Wishlist.add(FormWishlist.getValues())
         FormWishlist.clearFields()
-        Modal.close(DOM.modalOverlay.wishlist)
         try {
         } catch (error) {
             alert(error)
@@ -452,22 +448,27 @@ const DOM = {
 
     callBooksTable() {
         DOM.clearTable()
+        console.log(Book.get())
         Book.get().forEach(DOM.createBookTable)
+        Modal.close(DOM.modalOverlay.books)
     },
 
     callAuthorsTable() {
         DOM.clearTable()
         Author.get().forEach(DOM.createAuthorTable)
+        Modal.close(DOM.modalOverlay.authors)
     },
 
     callFriendsTable() {
         DOM.clearTable()
         Friend.get().forEach(DOM.createFriendTable)
+        Modal.close(DOM.modalOverlay.friends)
     },
 
     callWishlistTable() {
         DOM.clearTable()
         Wishlist.get().forEach(DOM.createWishlistTable)
+        Modal.close(DOM.modalOverlay.wishlist)
     }
 }
 
