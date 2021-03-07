@@ -24,7 +24,7 @@
 
     <main class="container">
         <section id="cards">
-            <a href="#" onclick="Modal.open('modal-overlay-books')">
+            <a href="#" name="buttonBooks" onclick="Modal.open('modal-overlay-books')">
                 <div class="card">
                     <h2>+Livros</h2>
                     <img src="./assets/book-01.svg" alt="">
@@ -57,52 +57,8 @@
         <section id="books-authors">
             <table id="data-table">
                 <thead>
-                    <!--
-                    <tr>
-                        <th>#</th>
-                        <th>Livro</th>
-                        <th>Autor</th>
-                        <th>Editora</th>
-                        <th>Categoria</th>
-                        <th></th>
-                    </tr>
-                    -->
                 </thead>
                 <tbody>
-                    <!--
-                    <tr>
-                        <td>1</td>
-                        <td>O problema do ser, do destino e da dor</td>
-                        <td>Leon Denis</td>
-                        <td>FEB</td>
-                        <td>Espiritismo</td>
-                        <td><img src="./assets/minus.svg" alt="Excluir registro"></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>No invisível</td>
-                        <td>Leon Denis</td>
-                        <td>FEB</td>
-                        <td>Espiritismo</td>
-                        <td><img src="./assets/minus.svg" alt="Excluir registro"></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>O grande enigma</td>
-                        <td>Leon Denis</td>
-                        <td>FEB</td>
-                        <td>Espiritismo</td>
-                        <td><img src="./assets/minus.svg" alt="Excluir registro"></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Cristianismo e Espiritismo</td>
-                        <td>Leon Denis</td>
-                        <td>FEB</td>
-                        <td>Espiritismo</td>
-                        <td><img src="./assets/minus.svg" alt="Excluir registro"></td>
-                    </tr>
-                    -->
                 </tbody>
             </table>
         </section>
@@ -113,7 +69,7 @@
         <div class="modal">
             <div class="forms" id="form-books">
                 <h2>Novo Livro</h2>
-                <form action="">
+                <form action="" onsubmit="FormBooks.submit(event)">
                     <div>
                         <label class="sr-only" for="title">Título</label>
                         <input type="text" name="title" id="title" placeholder="Título" />
@@ -161,12 +117,36 @@
         </div>
     </div>
 
+    <!-- Modal & form para cadastrar autores -->
+    <div class="modal-overlay" id="modal-overlay-authors">
+        <div class="modal">
+            <div class="forms" id="form-authors">
+                <h2>Novo Escritor</h2>
+                <form action="" onsubmit="FormAuthors.submit(event)">
+                    <div>
+                        <label class="sr-only" for="authorName">Nome</label>
+                        <input type="text" name="authorName" id="authorName" placeholder="Nome" />
+                    </div>
+                    <div>
+                        <label class="sr-only" for="biografy">Biografia</label>
+                        <textarea name="biografy" id="biografy" placeholder="Biografia resumida do escritor" cols="50"
+                            rows="6"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <a href="#" onclick="Modal.close('modal-overlay-authors')" class="button cancel">Cancelar</a>
+                        <button>Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal & form para cadastrar amigos -->
     <div class="modal-overlay" id="modal-overlay-friends">
         <div class="modal">
             <div class="forms" id="form-friends">
                 <h2>Novo Amigo</h2>
-                <form action="">
+                <form action="" onsubmit="FormFriends.submit(event)">
                     <div>
                         <label class="sr-only" for="name">Nome</label>
                         <input type="text" name="name" id="name" placeholder="Nome" />
@@ -196,43 +176,19 @@
         </div>
     </div>
 
-    <!-- Modal & form para cadastrar autores -->
-    <div class="modal-overlay" id="modal-overlay-authors">
-        <div class="modal">
-            <div class="forms" id="form-authors">
-                <h2>Novo Escritor</h2>
-                <form action="">
-                    <div>
-                        <label class="sr-only" for="author-name">Nome</label>
-                        <input type="text" name="author-name" id="author-name" placeholder="Nome" />
-                    </div>
-                    <div>
-                        <label class="sr-only" for="biografy">Biografia</label>
-                        <textarea name="biografy" id="biografy" placeholder="Biografia resumida do escritor" cols="50"
-                            rows="6"></textarea>
-                    </div>
-                    <div class="input-group">
-                        <a href="#" onclick="Modal.close('modal-overlay-authors')" class="button cancel">Cancelar</a>
-                        <button>Salvar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal & form para cadastrar os livros da lista de desejos -->
     <div class="modal-overlay" id="modal-overlay-wishlist">
         <div class="modal">
             <div class="forms" id="form-wishlist">
                 <h2>Novo item da lista de desejos</h2>
-                <form action="">
+                <form action="" onsubmit="FormWishlist.submit(event)">
                     <div>
-                        <label class="sr-only" for="whishlist-title">Título</label>
-                        <input type="text" name="whishlist-title" id="whishlist-title" placeholder="Título" />
+                        <label class="sr-only" for="wishlistTitle">Título</label>
+                        <input type="text" name="wishlistTitle" id="wishlistTitle" placeholder="Título" />
                     </div>
                     <div>
-                        <label class="sr-only" for="whishlist-author">Autor</label>
-                        <input type="text" name="whishlist-author" id="whishlist-author" placeholder="Autor/Autores" />
+                        <label class="sr-only" for="wishlistAuthor">Autor</label>
+                        <input type="text" name="wishlistAuthor" id="wishlistAuthor" placeholder="Autor/Autores" />
                     </div>
                     <div>
                         <label class="sr-only" for="link">Link do livro</label>
