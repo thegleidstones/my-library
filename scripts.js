@@ -41,7 +41,15 @@ Storage = {
 
     setWishlist(wishlist) {
         localStorage.setItem("my-library:wishlist", JSON.stringify(wishlist))
-    }
+    },
+
+    getBookLoans() {
+        return JSON.parse(localStorage.getItem("my-library:bookLoans")) || []
+    },
+
+    setBookLoans(bookLoans) {
+        localStorage.setItem("my-library:bookLoans", JSON.stringify(bookLoans))
+    },
 }
 
 const Friend = {
@@ -117,7 +125,7 @@ const Book = {
 }
 
 const BookLoan = {
-    bookLoans: [],
+    bookLoans: Storage.getBookLoans(),
 
     add(bookLoan) {
         this.bookLoans.push(bookLoan)
@@ -677,43 +685,15 @@ const DOM = {
     callBookLoansTable() {
         DOM.clearTable()
         BookLoan.get().forEach(DOM.createBookLoanTable)
+        Storage.setBookLoans(BookLoan.get())
         Modal.close(DOM.modalOverlay.bookLoans)
     }
 }
 
 const App = {
     init() {
-        const bookLoan = {
-            book: {
-                abstract: "A Comitiva do Anel se divide. Frodo e Sam continuam a viagem, descendo sozinhos o Grande Rio Anduin ? mas não tão sozinhos assim, pois uma figura misteriosa segue todos os seus passos...",
-                author: "J. R. R. Tolkien",
-                category: "Fantasia",
-                isbn: "978-8533613386",
-                pages: "380",
-                published: "01/01/2000",
-                publisher: "Martins Fontes",
-                title: "O Senhor dos Anéis: As Duas Torres",
-            },
-            friend: {
-                address: "Rua dos pinhais, 235 Santa Maria - Jataí GO",
-                cellphone: "(64) 99946-7845",
-                email: "ulisses@gmail.com",
-                instagram: "@ulissesgimenes",
-                name: "Ulisses Peba Gimenes",
-            }
-        }
-        /*
-        BookLoan.add(bookLoan)
-        BookLoan.add(bookLoan)
-        BookLoan.add(bookLoan)
-        const index = 1
-        console.log(BookLoan.get())
-        console.log("Pega esse pra mim: ", BookLoan.get()[index])
-        */
-
         Book.get().forEach(DOM.createBookTable)
     }
 }
-
 
 App.init()
