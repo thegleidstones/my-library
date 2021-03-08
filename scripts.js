@@ -8,8 +8,43 @@ const Modal = {
     }
 }
 
+Storage = {
+    getBooks() {
+        return JSON.parse(localStorage.getItem("my-library:books")) || []
+    },
+
+    setBooks(books) {
+        localStorage.setItem("my-library:books", JSON.stringify(books))
+    },
+
+    getAuthors() {
+        return JSON.parse(localStorage.getItem("my-library:authors")) || []
+
+    },
+
+    setAuthors(authors) {
+        localStorage.setItem("my-library:authors", JSON.stringify(authors))
+    },
+
+    getFriends() {
+        return JSON.parse(localStorage.getItem("my-library:friends")) || []
+    },
+
+    setFriends(friends) {
+        localStorage.setItem("my-library:friends", JSON.stringify(friends))
+    },
+
+    getWishlist() {
+        return JSON.parse(localStorage.getItem("my-library:wishlist")) || []
+    },
+
+    setWishlist(wishlist) {
+        localStorage.setItem("my-library:wishlist", JSON.stringify(wishlist))
+    }
+}
+
 const Friend = {
-    friends: [],
+    friends: Storage.getFriends(),
 
     add(friend) {
         this.friends.push(friend)
@@ -27,7 +62,7 @@ const Friend = {
 }
 
 const Author = {
-    authors: [],
+    authors: Storage.getAuthors(),
 
     add(author) {
         this.authors.push(author)
@@ -45,7 +80,7 @@ const Author = {
 }
 
 const Wishlist = {
-    wishlists: [],
+    wishlists: Storage.getWishlist(),
 
     add(wishlist) {
         this.wishlists.push(wishlist)
@@ -63,7 +98,7 @@ const Wishlist = {
 }
 
 const Book = {
-    books: [],
+    books: Storage.getBooks(),
 
     add(book) {
         this.books.push(book)
@@ -448,80 +483,35 @@ const DOM = {
 
     callBooksTable() {
         DOM.clearTable()
-        console.log(Book.get())
         Book.get().forEach(DOM.createBookTable)
+        Storage.setBooks(Book.get())
         Modal.close(DOM.modalOverlay.books)
     },
 
     callAuthorsTable() {
         DOM.clearTable()
         Author.get().forEach(DOM.createAuthorTable)
+        Storage.setAuthors(Author.get())
         Modal.close(DOM.modalOverlay.authors)
     },
 
     callFriendsTable() {
         DOM.clearTable()
         Friend.get().forEach(DOM.createFriendTable)
+        Storage.setFriends(Friend.get())
         Modal.close(DOM.modalOverlay.friends)
     },
 
     callWishlistTable() {
         DOM.clearTable()
         Wishlist.get().forEach(DOM.createWishlistTable)
+        Storage.setWishlist(Wishlist.get())
         Modal.close(DOM.modalOverlay.wishlist)
     }
 }
 
 const App = {
     init() {
-        const author = {
-            "authorName": "J. R. R. Tolkien",
-            "biografy": "J. R. R. Tolkien (1892-1973) foi um escritor, filólogo e professor universitário inglês e autor de Senhor dos Anéis e Hobbit, verdadeiros clássicos da literatura fantástica. Em 1972 foi nomeado Comandante da Ordem do Império Britânico pela Rainha Elizabeth II."
-        }
-        
-        const friend = {
-            "name": "Ulisses Gimenes de Freitas",
-            "cellphone": "(64) 99988-4545",
-            "email" : "ulisses@gmail.com",
-            "instagram": "@ulissesgimenes",
-            "address": "Rua dos pinhais, 335 - Jataí-GO"
-        }
-        
-        const wishlist = {
-            "wishlistTitle": "O Senhor dos Anéis: A Sociedade do Anel",
-            "wishlistAuthor": "J. R. R. Tolkien",
-            "link": "https://www.amazon.com.br/Sociedade-Anel-S%C3%A9rie-Senhor-An%C3%A9is/dp/8533613377"
-        }
-        
-        const book = {
-            "title": "O Senhor dos Anéis: As Duas Torres",
-            "author": "J. R. R. Tolkien",
-            "abstract": "A Comitiva do Anel se divide. Frodo e Sam continuam a viagem, descendo sozinhos o Grande Rio Anduin ? mas não tão sozinhos assim, pois uma figura misteriosa segue todos os seus passos...",
-            "category": "Fantasia",
-            "publisher": "Martins Fontes",
-            "published": "01/01/2000",
-            "pages": "380",
-            "isbn": "978-8533613386"
-        }
-
-        /*
-        for(let i = 0; i < 5; i++) {
-            Book.add(book)
-        }
-
-        for(let i = 0; i < 5; i++) {
-            Wishlist.add(wishlist)
-        }
-
-        for(let i = 0; i < 5; i++) {
-            Friend.add(friend)
-        }
-
-        for(let i = 0; i < 5; i++) {
-            Author.add(author)
-        }
-        */
-
         Book.get().forEach(DOM.createBookTable)
     }
 }
