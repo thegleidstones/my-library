@@ -1,6 +1,7 @@
 const Modal = {
     open(modal) {
         document.getElementById(modal).classList.add('active')
+        DOM.callBookLoanSelects()
     },
 
     close(modal) {
@@ -384,6 +385,7 @@ FormBookLoans = {
             bookLoanDate.trim() === "") {
             throw new Error("Por favor, informe os dados para empréstimo do livro")
         }
+ 
     },
 
     clearFields() {
@@ -395,7 +397,7 @@ FormBookLoans = {
     submit(event) {
         event.preventDefault()
 
-        try {
+        try {            
             FormBookLoans.validateFields()
             BookLoan.add(FormBookLoans.createObjectBookLoan())
             FormBookLoans.clearFields()
@@ -461,6 +463,8 @@ const DOM = {
 
     tableBodyContainer: document.querySelector('#data-table tbody'),
     tableHeadContainer: document.querySelector('#data-table thead'),
+    selectBookLoanBook: document.querySelector('select#bookLoanBook'),
+    selectBookLoanFriend: document.querySelector('select#bookLoanFriend'),
 
     createBookTable(book, index) {
         if (index === 0) {
@@ -523,6 +527,38 @@ const DOM = {
         DOM.tableBodyContainer.appendChild(trBody)
     },
 
+    createBookLoanBookSelect(book, index) {
+        const option = document.createElement('option')
+        
+        if (index === 0) {
+            const option = document.createElement('option')
+            option.value = ""
+            option.innerHTML = "========= Selecione um Livro ========="
+            DOM.selectBookLoanBook.appendChild(option)
+        }
+
+        option.value = index
+        option.innerHTML = book.title
+        
+        DOM.selectBookLoanBook.appendChild(option)
+    },
+
+    createBookLoanFriendSelect(friend, index) {
+        const option = document.createElement('option')
+
+        if (index === 0) {
+            const option = document.createElement('option')
+            option.value = ""
+            option.innerHTML = "========= Selecione um Amigo ========="
+            DOM.selectBookLoanFriend.appendChild(option)
+        }
+
+        option.value = index
+        option.innerHTML = friend.name
+
+        DOM.selectBookLoanFriend.appendChild(option)
+    },
+
     createBookTableData(book, index) {
         const html = `
             <td>${index + 1}</td>
@@ -580,9 +616,34 @@ const DOM = {
         return html
     },
 
+    createBookOption(book, index) {
+        const html = `
+            <option value=${index}>${book.title}</option>
+        `
+        return html
+    },
+
+    createBookLoanFriendOption(friend, index) {
+        const html = `
+            <option value=${index}>${friend.name}</option>
+        `
+        return html
+    },
+
     clearTable() {
         DOM.tableBodyContainer.innerHTML = ""
         DOM.tableHeadContainer.innerHTML = ""
+    },
+
+    clearSelect() {
+        DOM.selectBookLoanBook.innerHTML = ""
+        DOM.selectBookLoanFriend.innerHTML = ""
+    },
+
+    callBookLoanSelects() {
+        DOM.clearSelect()
+        Book.get().forEach(DOM.createBookLoanBookSelect)
+        Friend.get().forEach(DOM.createBookLoanFriendSelect)
     },
 
     callBooksTable() {
