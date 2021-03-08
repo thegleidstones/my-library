@@ -60,6 +60,8 @@ header img {
     align-items: center;
     justify-content: center;
 
+    font-size: 0.75rem;
+
     cursor: pointer;
 
     height: 90px;
@@ -70,7 +72,7 @@ header img {
 
     border: 1px solid var(--grape);
 
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .card div {
@@ -186,6 +188,21 @@ table tbody tr td {
     resize: none;
 }
 
+.forms select {
+    border: 1px solid var(--sand);
+    border-radius: 0.2rem;
+
+    padding: 0.8rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    height: 45px;    
+}
+
+.forms small {
+    margin-left: 1rem ;
+    opacity: 0.6;    
+}
+
 .input-group {
     margin-top: 0.8rem;
     display: flex;
@@ -228,10 +245,6 @@ table tbody tr td {
     width: 100%;
 }
 
-#form-books .published-pages-isbn small {
-    margin-left: 1rem ;
-    opacity: 0.6;    
-}
 #form-books .published-pages-isbn .published, 
 #form-books .published-pages-isbn .pages,
 #form-books .published-pages-isbn .isbn {
@@ -267,6 +280,17 @@ table tbody tr td {
 }
 
 #modal-overlay-wishlist.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Form Book Loan ========================================*/
+#modal-overlay-bookLoans {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#modal-overlay-bookLoans.active {
     opacity: 1;
     visibility: visible;
 }
@@ -341,8 +365,8 @@ footer {
 @media(min-width: 900px) {
     #cards {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1rem;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.25rem;
     }
 
     #form-friends {
