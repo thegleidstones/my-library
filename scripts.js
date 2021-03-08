@@ -115,6 +115,24 @@ const Book = {
     }
 }
 
+const BookLoan = {
+    bookLoans: [],
+
+    add(bookLoan) {
+        this.bookLoans.push(bookLoan)
+        DOM.callBookLoansTable()
+    },
+
+    get() {
+        return this.bookLoans
+    },
+
+    remove(index) {
+        this.bookLoans.splice(index, 1)
+        DOM.callBookLoansTable()
+    }
+}
+
 Utils = {
     formatDate(date) {
         const dateArray = date.split('-')
@@ -322,10 +340,65 @@ FormWishlist = {
     submit(event) {
         event.preventDefault()
 
-        FormWishlist.validateFields()
-        Wishlist.add(FormWishlist.getValues())
-        FormWishlist.clearFields()
         try {
+            FormWishlist.validateFields()
+            Wishlist.add(FormWishlist.getValues())
+            FormWishlist.clearFields()            
+        } catch (error) {
+            alert(error)
+        }
+    }
+}
+
+FormBookLoans = {
+    bookLoanBook: document.querySelector('select#bookLoanBook'),
+    bookLoanFriend: document.querySelector('select#bookLoanFriend'),
+    bookLoanDate: document.querySelector('input#bookLoanDate'),
+    
+    getValues() {
+        return {
+            bookId: FormBookLoans.bookLoanBook.value,
+            friendId: FormBookLoans.bookLoanFriend.value,
+            bookLoanDate: FormBookLoans.bookLoanDate.value
+        }
+    },
+
+    createObjectBookLoan() {
+        let { bookId, friendId, bookLoanDate } = FormBookLoans.getValues()
+        const book = Book.get()[bookId]
+        const friend = Friend.get()[friendId]
+        bookLoanDate = Utils.formatDate(bookLoanDate)
+
+        return {
+            book,
+            friend,
+            bookLoanDate        
+        }
+    },
+    
+    validateFields() {
+        const { bookId, friendId, bookLoanDate } = FormBookLoans.getValues()
+
+        if (bookId.trim() === "" || 
+            friendId.trim() === "" || 
+            bookLoanDate.trim() === "") {
+            throw new Error("Por favor, informe os dados para empréstimo do livro")
+        }
+    },
+
+    clearFields() {
+        FormBookLoans.bookLoanBook.value = "",
+        FormBookLoans.bookLoanFriend.value = "",
+        FormBookLoans.bookLoanDate.value = ""
+    },
+
+    submit(event) {
+        event.preventDefault()
+
+        try {
+            FormBookLoans.validateFields()
+            BookLoan.add(FormBookLoans.createObjectBookLoan())
+            FormBookLoans.clearFields()
         } catch (error) {
             alert(error)
         }
@@ -338,6 +411,7 @@ const DOM = {
         authors: 'modal-overlay-authors',
         friends: 'modal-overlay-friends',
         wishlist: 'modal-overlay-wishlist',
+        bookLoans: 'modal-overlay-bookLoans'
     },
 
     tableHeads: {
@@ -346,8 +420,8 @@ const DOM = {
             <th></th>
             <th>Título</th>
             <th>Autor</th>
-            <th>Categoria</th>
             <th>Editora</th>
+            <th>Categoria</th>
             <th></th>
         `,
         authors: 
@@ -373,6 +447,14 @@ const DOM = {
             <th>Título</th>
             <th>Autor</th>
             <th>Link</th>
+            <th></th>
+        `,
+        bookLoans:
+        `
+            <th></th>
+            <th>Livro Emprestado</th>
+            <th>Amigo</th>
+            <th>Empréstimo em:</th>
             <th></th>
         `
     },
@@ -429,6 +511,18 @@ const DOM = {
         DOM.tableBodyContainer.appendChild(trBody)
     },
 
+    createBookLoanTable(bookLoan, index) {
+        if (index === 0) {
+            const trHead = document.createElement('tr')
+            trHead.innerHTML = DOM.tableHeads.bookLoans
+            DOM.tableHeadContainer.appendChild(trHead)
+        }
+
+        const trBody = document.createElement('tr')
+        trBody.innerHTML = DOM.createBookLoanTableData(bookLoan, index)
+        DOM.tableBodyContainer.appendChild(trBody)
+    },
+
     createBookTableData(book, index) {
         const html = `
             <td>${index + 1}</td>
@@ -473,7 +567,17 @@ const DOM = {
             <td><img onclick="Wishlist.remove(${index})" src="./assets/minus.svg" alt="Excluir registro"></td>
         `
         return html
+    },
 
+    createBookLoanTableData(bookLoan, index) {
+        const html = `
+            <td>${index + 1}</td>
+            <td>${bookLoan.book.title}</td>
+            <td>${bookLoan.friend.name}</td>
+            <td>${bookLoan.bookLoanDate}</td>
+            <td><img onclick="BookLoan.remove(${index})" src="./assets/minus.svg" alt="Excluir registro"></td>
+        `
+        return html
     },
 
     clearTable() {
@@ -507,11 +611,45 @@ const DOM = {
         Wishlist.get().forEach(DOM.createWishlistTable)
         Storage.setWishlist(Wishlist.get())
         Modal.close(DOM.modalOverlay.wishlist)
+    },
+
+    callBookLoansTable() {
+        DOM.clearTable()
+        BookLoan.get().forEach(DOM.createBookLoanTable)
+        Modal.close(DOM.modalOverlay.bookLoans)
     }
 }
 
 const App = {
     init() {
+        const bookLoan = {
+            book: {
+                abstract: "A Comitiva do Anel se divide. Frodo e Sam continuam a viagem, descendo sozinhos o Grande Rio Anduin ? mas não tão sozinhos assim, pois uma figura misteriosa segue todos os seus passos...",
+                author: "J. R. R. Tolkien",
+                category: "Fantasia",
+                isbn: "978-8533613386",
+                pages: "380",
+                published: "01/01/2000",
+                publisher: "Martins Fontes",
+                title: "O Senhor dos Anéis: As Duas Torres",
+            },
+            friend: {
+                address: "Rua dos pinhais, 235 Santa Maria - Jataí GO",
+                cellphone: "(64) 99946-7845",
+                email: "ulisses@gmail.com",
+                instagram: "@ulissesgimenes",
+                name: "Ulisses Peba Gimenes",
+            }
+        }
+        /*
+        BookLoan.add(bookLoan)
+        BookLoan.add(bookLoan)
+        BookLoan.add(bookLoan)
+        const index = 1
+        console.log(BookLoan.get())
+        console.log("Pega esse pra mim: ", BookLoan.get()[index])
+        */
+
         Book.get().forEach(DOM.createBookTable)
     }
 }
