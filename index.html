@@ -46,6 +46,13 @@
                 </div>
             </a>
 
+            <a href="#" onclick="Modal.open('modal-overlay-bookLoans')">
+                <div class="card">
+                    <h2>+Empréstimos</h2>
+                    <img src="./assets/book-loan.svg" alt="Empréstimos de livro">
+                </div>
+            </a>
+
             <a href="#" onclick="Modal.open('modal-overlay-wishlist')">
                 <div class="card">
                     <h2>+Lista de Desejos</h2>
@@ -196,11 +203,49 @@
                     <div>
                         <label class="sr-only" for="link">Link do livro</label>
                         <input type="text" name="link" id="link"
-                            placeholder="www.livrariaonline.com.br/livro-desejado" />
+                            placeholder="link do livro desejado" />
                     </div>
                     <div class="input-group">
                         <a href="#" onclick="Modal.close('modal-overlay-wishlist')" class="button cancel">Cancelar</a>
                         <a href="#" onclick=DOM.callWishlistTable() class="button list">Lista</a>
+                        <button>Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-overlay-bookLoans">
+        <div class="modal">
+            <div class="forms" id="form-bookLoan">
+                <h2>Novo Empréstimo</h2>
+                <form action="" onsubmit="FormBookLoans.submit(event)">
+                    <div>
+                        <label class="sr-only" for="bookLoan">Livro</label>
+                        <select name="bookLoanTitle" id="bookLoanBook">
+                            <option value="">========= Selecione um Livro =========</option>
+                            <option value="0">Senhor dos Anéis: A Sociedade do Anel</option>
+                            <option value="1">Senhor dos Anéis: As Duas Torres</option>
+                            <option value="2">Senhor dos Anéis: O Retorno do Rei</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="sr-only" for="">Amigo</label>
+                        <select name="bookLoanFriend" id="bookLoanFriend">
+                            <option value="">========= Selecione um Amigo =========</option>
+                            <option value="0">Ulisses Peba Gimenes</option>
+                            <option value="1">André Pebolino Santarém</option>
+                            <option value="2">Vinícius Henrique Araújo Carvalho</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="sr-only" for="bookLoanDate">Data empréstimo</label>
+                        <input type="date" name="bookLoanDate" id="bookLoanDate">
+                        <small>data do empréstimo</small>
+                    </div>
+                    <div class="input-group">
+                        <a href="#" onclick="Modal.close('modal-overlay-bookLoans')" class="button cancel">Cancelar</a>
+                        <a href="#" onclick="DOM.callBookLoansTable()" class="button list">Lista</a>
                         <button>Salvar</button>
                     </div>
                 </form>
