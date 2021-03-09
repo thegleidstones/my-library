@@ -16,10 +16,15 @@
     <title>Document</title>
 </head>
 
-<body>
+<body class="light-theme">
     <header>
-        <img src="./assets/digital-library.svg" alt="">
-        <h1>My Library</h1>
+        <div class="logo">
+            <img src="./assets/digital-library.svg" alt="">
+            <h1>My Library</h1>
+        </div>
+        <div>
+            <button class="btn-toogle" onclick="DOM.toggleTheme(event)">Dark Theme</button>
+        </div>
     </header>
 
     <main class="container">
@@ -29,7 +34,6 @@
                     <h2>+Livros</h2>
                     <img src="./assets/book-01.svg" alt="">
                 </div>
-
             </a>
 
             <a href="#" onclick="Modal.open('modal-overlay-authors')">
@@ -247,12 +251,12 @@
 
     <footer>
         <div>
-            Icons by <a href="https://freeicons.io/profile/730">Anu Rocks</a>
-            and <a href="https://freeicons.io/profile/5596">shivani</a> on <a
-                href="https://freeicons.io">freeicons.io</a>
+            Icons by <a href="https://freeicons.io/profile/730" target="_blank">Anu Rocks</a>
+            and <a href="https://freeicons.io/profile/5596" target="_blank">shivani</a> on <a
+                href="https://freeicons.io" target="_blank">freeicons.io</a>
             <p><a href="https://iconscout.com/icons/digital-library" target="_blank">Digital Library Icon</a> by <a
-                    href="https://iconscout.com/contributors/pro-symbols">Pro Symbols</a> on <a
-                    href="https://iconscout.com">Iconscout</a></p>
+                    href="https://iconscout.com/contributors/pro-symbols" target="_blank">Pro Symbols</a> on <a
+                    href="https://iconscout.com" target="_blank">Iconscout</a></p>
         </div>
     </footer>
 
