@@ -1,20 +1,128 @@
 /* Global ==========================================*/
-:root {
-    --purple: rgb(94, 56, 94); 
-    --purple2: #49274A;
-    --grape: #94618E;
-    --sand: #f4decb;
-    --shell: #F8EEE7;
-}
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    background: #f0f2f5;
+body.light-theme {
+    --bkg-color: #f0f2f5;
+    --header-bkg: #49274A;
+    --logo-text: #f0f2f5;
+
+    --card-color: #5e385e; 
+    --card-border: #9c5794;
+
+    --tbl-text: #9c5794;
+    --tbl-head: #f4decb;
+    --tbl-line: #F8EEE7;
+
+    --tbl-head-bkg: #f4decb;
+    --tbl-head-text: #49274A;
+    --tbl-body-bkg: #F8EEE7;
+    --tbl-body-text: #9c5794;
+
+    --text-header: #49274A;
+
+    --input-bkg: #F8EEE7;
+    --input-color: #49274A;
+    --input-border: #f4decb;
+    --input-border-focus: #9c5794;
+
+    --btn-cancel: #ff7f50;
+    --btn-list: #94618e;
+    --btn-save-bkg: #f0f2f5;
+    --btn-save: #3bca3b;
+    --btn-toogle-bkg: #0d1117;
+    --btn-toogle-text: #c9d1d9;
+
+    --footer-color: #79c0ff;
+    
+    background: var(--bkg-color);
+    font-family: 'Poppins', sans-serif;
+}
+
+body.dark-theme {
+    --bkg-color: #0d1117;
+    --header-bkg: #161b22;   
+    --logo-text: #c9d1d9;
+
+    --card-color: #21262d; 
+    --card-border: #484f58;
+
+    --tbl-head-bkg: #21262d;
+    --tbl-head-text: #c9d1d9;
+    --tbl-body-bkg: #484f58;
+    --tbl-body-text: #b1bac4;
+
+    --text-header: #c9d1d9;
+
+    --input-bkg: #21262d;
+    --input-color: #6e7681;
+    --input-border: #8b949e;
+    --input-border-focus: #388bfd;
+
+    --btn-cancel: #ff7f50;
+    --btn-list: #1f6feb;
+    --btn-save-bkg: #0d1117;
+    --btn-save: #238636;
+    --btn-toogle-bkg: #f0f2f5;
+    --btn-toogle-text: #49274A;
+
+    --footer-color: #79c0ff;
+
+    --color-scale-black: #010409;
+    --color-scale-white: #f0f6fc;
+    --color-scale-gray-0: #f0f6fc;
+    --color-scale-gray-1: #c9d1d9;
+    --color-scale-gray-2: #b1bac4;
+    --color-scale-gray-3: #8b949e;
+    --color-scale-gray-4: #6e7681;
+    --color-scale-gray-5: #484f58;
+    --color-scale-gray-6: #30363d;
+    --color-scale-gray-7: #21262d;
+    --color-scale-gray-8: #161b22;
+    --color-scale-gray-9: #0d1117;
+    --color-scale-blue-0: #cae8ff;
+    --color-scale-blue-1: #a5d6ff;
+    --color-scale-blue-2: #79c0ff;
+    --color-scale-blue-3: #58a6ff;
+    --color-scale-blue-4: #388bfd;
+    --color-scale-blue-5: #1f6feb;
+    --color-scale-blue-6: #1158c7;
+    --color-scale-blue-7: #0d419d;
+    --color-scale-blue-8: #0c2d6b;
+    --color-scale-blue-9: #051d4d;
+    --color-scale-green-0: #aff5b4;
+    --color-scale-green-1: #7ee787;
+    --color-scale-green-2: #56d364;
+    --color-scale-green-3: #3fb950;
+    --color-scale-green-4: #2ea043;
+    --color-scale-green-5: #238636;
+    --color-scale-green-6: #196c2e;
+    --color-scale-green-7: #0f5323;
+    --color-scale-green-8: #033a16;
+    --color-scale-green-9: #04260f;
+    --color-scale-yellow-0: #f8e3a1;
+    --color-scale-yellow-1: #f2cc60;
+    --color-scale-yellow-2: #e3b341;
+    --color-scale-yellow-3: #d29922;
+    --color-scale-yellow-4: #bb8009;
+    --color-scale-yellow-5: #9e6a03;
+    --color-scale-yellow-6: #845306;
+    --color-scale-yellow-7: #693e00;
+    --color-scale-yellow-8: #4b2900;
+    --color-scale-yellow-9: #341a00;
+    --color-scale-orange-0: #ffdfb6;
+    --color-scale-orange-1: #ffc680;
+    --color-scale-orange-2: #ffa657;
+    --color-scale-orange-3: #f0883e;
+    --color-scale-orange-4: #db6d28;
+    --color-scale-orange-5: #bd561d;
+    --color-scale-orange-6: #9b4215;
+    --color-scale-orange-7: #762d0a;
+
+    background: var(--bkg-color);
     font-family: 'Poppins', sans-serif;
 }
 
@@ -35,9 +143,26 @@ header {
     height: 150px;
     display: flex;
     align-items: center;
-    font-family: 'Poppins';
-    background: var(--purple2);
-    color: white;
+    justify-content: space-between;
+    font-family: 'Poppins', sans-serif;
+    color: var(--logo-text);
+    background: var(--header-bkg);    
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+}
+
+header .btn-toogle {
+    background: var(--btn-toogle-bkg);
+    color: var(--btn-toogle-text);
+    border: 2px solid var(--btn-toogle-text);
+    height: 30px;
+    padding: 0.5rem;
+    margin-right: 1rem;
+    transition: 0.2s;
+    cursor: pointer;
 }
 
 header img {
@@ -52,7 +177,7 @@ header img {
 }
 
 #cards {
-    color: var(--purple);
+    color: var(--card-color);
     margin-top: -2rem;
 }
 .card {
@@ -67,12 +192,14 @@ header img {
     height: 90px;
 
     padding: 1rem;
-    background: #FFF;
+    background: var(--bkg-color);
     border-radius: 5px;
 
-    border: 1px solid var(--grape);
+    border: 1px solid var(--card-border);
 
     margin-bottom: 0.5rem;
+
+    transition: 0.2s;
 }
 
 .card div {
@@ -80,9 +207,8 @@ header img {
 }
 
 .card:hover {
-    background-color: var(--grape);
-    color: #FFF;
-    /*border: 1px solid #FFF;*/
+    background-color: var(--card-color);
+    color: var(--logo-text);
 }
 
 .card img {
@@ -121,15 +247,15 @@ table tbody tr td:last-child {
 }
 
 table thead tr th {
-    background: var(--sand);
-    color: var(--purple2);
+    background: var(--tbl-head-bkg);
+    color: var(--tbl-head-text);
     padding: 1rem 1rem;
     text-align: left;
 }
 
 table tbody tr td {
-    background: var(--shell);
-    color: var(--grape);
+    background: var(--tbl-body-bkg);
+    color: var(--tbl-body-text);
     padding: 0.5rem 0.5rem;
 }
 
@@ -150,7 +276,7 @@ table tbody tr td {
 }
 
 .modal {
-    background: #f0f2f5;
+    background: var(--bkg-color);
     border-radius: 0.5rem;
     padding: 2rem;
     position: relative;
@@ -159,17 +285,21 @@ table tbody tr td {
 
 /* Forms General ==========================================*/
 .forms {
-    max-width: 500px;
+    max-width: 500px;    
 }
 
 .forms h2{
     margin-top: 0;
-    color: var(--grape);
+    color: var(--text-header);
 }
 
 .forms input {
-    border: 1px solid var(--sand);
+    background: var(--input-bkg);
+    color: var(--input-color);
+    border: 1px solid var(--input-border);
     border-radius: 0.2rem;
+
+    font-family: "Poppins", sans-serif;
 
     padding: 0.8rem;
     margin-bottom: 0.5rem;
@@ -178,9 +308,18 @@ table tbody tr td {
     height: 40px;
 }
 
+.forms input:focus {
+    outline: none !important;
+    border: 1px solid var(--input-border-focus);
+}
+
 .forms textarea {
-    border: 1px solid var(--sand);
+    background: var(--input-bkg);
+    color: var(--input-color);
+    border: 1px solid var(--input-border);
     border-radius: 0.2rem;
+
+    font-family: "Poppins", sans-serif;
 
     padding: 0.8rem;
     width: 100%;
@@ -188,18 +327,33 @@ table tbody tr td {
     resize: none;
 }
 
+.forms textarea:focus {
+    outline: none !important;
+    border: 1px solid var(--input-border-focus);
+}
+
 .forms select {
-    border: 1px solid var(--sand);
+    background: var(--input-bkg);
+    color: var(--input-color);
+    border: 1px solid var(--input-border);
     border-radius: 0.2rem;
+
+    font-family: "Poppins", sans-serif;
 
     padding: 0.8rem;
     margin-bottom: 0.5rem;
     width: 100%;
-    height: 45px;    
+    height: 45px;
+}
+
+.forms select:focus {
+    outline: none !important;
+    border: 1px solid var(--input-border-focus);
 }
 
 .forms small {
-    margin-left: 1rem ;
+    color: var(--input-color);
+    margin-left: 0.5rem;
     opacity: 0.6;    
 }
 
@@ -298,12 +452,17 @@ table tbody tr td {
 /* Buttons & Links =================================*/
 a {
     text-decoration: none;
+    color: var(--text-header);
 }
 
 button {
-    color: rgb(59, 202, 59);
-    border: 3px solid rgb(59, 202, 59);
+    background: var(--btn-save-bkg);
+    color: var(--btn-save);
+    border: 3px solid var(--btn-save);
     border-radius: 0.25rem;
+
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
 
     height: 50px;
     
@@ -319,9 +478,11 @@ button:hover {
 }
 
 .button.cancel {
-    color: coral;
-    border: 3px coral solid;
+    color: var(--btn-cancel);
+    border: 3px var(--btn-cancel) solid;
     border-radius: 0.25rem;
+
+    font-size: 1rem;
 
     height: 50px;
 
@@ -333,9 +494,11 @@ button:hover {
 }
 
 .button.list {
-    color: var(--grape);
-    border: 3px var(--grape) solid;
+    color: var(--btn-list);
+    border: 3px var(--btn-list) solid;
     border-radius: 0.25rem;
+
+    font-size: 1rem;
 
     height: 50px;
 
@@ -356,13 +519,24 @@ button:hover {
 
 /* Footer ==========================================*/
 footer {
+    color: var(--text-header);
+    font-size: 0.8rem;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+footer a {
+    color: var(--footer-color);
+}
+
+
 /* Responsive ======================================*/
 @media(min-width: 900px) {
+    .container {
+        min-height: 500px;
+    }
+
     #cards {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
