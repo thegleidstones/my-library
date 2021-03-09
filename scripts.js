@@ -421,7 +421,7 @@ const DOM = {
         authors: 'modal-overlay-authors',
         friends: 'modal-overlay-friends',
         wishlist: 'modal-overlay-wishlist',
-        bookLoans: 'modal-overlay-bookLoans'
+        bookLoans: 'modal-overlay-bookLoans',
     },
 
     tableHeads: {
@@ -473,6 +473,21 @@ const DOM = {
     tableHeadContainer: document.querySelector('#data-table thead'),
     selectBookLoanBook: document.querySelector('select#bookLoanBook'),
     selectBookLoanFriend: document.querySelector('select#bookLoanFriend'),
+
+    toggleTheme(event) {
+        event.preventDefault()
+
+        const bodyClass = document.body.classList.value
+        const buttonToggle = document.querySelector('.btn-toogle')
+
+        if (bodyClass === "light-theme") {
+            document.body.classList.replace("light-theme", "dark-theme")
+            buttonToggle.innerHTML = "Light Theme"
+        } else {
+            document.body.classList.replace("dark-theme", "light-theme")
+            buttonToggle.innerHTML = "Dark Theme"
+        }
+    },
 
     createBookTable(book, index) {
         if (index === 0) {
