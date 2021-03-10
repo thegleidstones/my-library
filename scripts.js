@@ -142,7 +142,10 @@ const BookLoan = {
     },
 
     remove(index) {
+        const bookLoan = BookLoan.get()[index]
+        const book = bookLoan.book
         this.bookLoans.splice(index, 1)
+        Book.changeStatus(book.id, "Disponível")
         DOM.callBookLoansTable()
     }
 }
@@ -382,14 +385,20 @@ FormBookLoans = {
 
     createObjectBookLoan() {
         let { bookId, friendId, bookLoanDate } = FormBookLoans.getValues()
+        const id = BookLoan.get().length
         const book = Book.get()[bookId]
         const friend = Friend.get()[friendId]
+        const status = "Em Aberto"
         bookLoanDate = Utils.formatDate(bookLoanDate)
+        bookLoanDevolutionDate = ""
 
         return {
+            id,
             book,
             friend,
-            bookLoanDate        
+            bookLoanDate,
+            bookLoanDevolutionDate,
+            status
         }
     },
     
@@ -400,20 +409,12 @@ FormBookLoans = {
             friendId.trim() === "" || 
             bookLoanDate.trim() === "") {
             throw new Error("Por favor, informe os dados para empréstimo do livro")
-        }
- 
+        } 
     },
 
     updateBookStatus() {
         let bookId = FormBookLoans.getValues().bookId
-        console.log("Pegando o id do livro selecionado na pesquisa:", bookId)
-
-        let bookOld = Book.get()[bookId]
-        console.log("Pegando o objeto book:", bookOld)
-
         Book.changeStatus(bookId, "Emprestado")
-        let bookNew = Book.get()[bookId]
-        console.log("Pegando o book apos atualizar o status dele", bookNew)
     },
 
     clearFields() {
@@ -487,7 +488,10 @@ const DOM = {
             <th></th>
             <th>Livro Emprestado</th>
             <th>Amigo</th>
-            <th>Empréstimo em:</th>
+            <th>Empréstimo</th>
+            <th>Devolução</th>
+            <th>Status</th>
+            <th></th>
             <th></th>
         `
     },
@@ -600,10 +604,12 @@ const DOM = {
             DOM.selectBookLoanBook.appendChild(option)
         }
 
-        option.value = index
-        option.innerHTML = book.title
-        
-        DOM.selectBookLoanBook.appendChild(option)
+        if (book.status === "Disponível") {
+            option.value = index
+            option.innerHTML = book.title
+            
+            DOM.selectBookLoanBook.appendChild(option)
+        }
     },
 
     createBookLoanFriendSelect(friend, index) {
@@ -623,6 +629,16 @@ const DOM = {
     },
 
     createBookTableData(book, index) {
+        const remove = book.status === "Emprestado" ? "" : 
+        `
+            <i 
+                class="fa fa-minus-square btn-remove" 
+                title="Clique para excluir o registro" 
+                onclick="Book.remove(${index})" 
+                aria-hidden="true"
+            >
+            </i>
+        `
         const html = `
             <td>${index + 1}</td>
             <td>${book.title}</td>
@@ -630,7 +646,7 @@ const DOM = {
             <td>${book.publisher}</td>
             <td>${book.category}</td>
             <td>${book.status}</td>
-            <td><img onclick="Book.remove(${index})" src="./assets/minus.svg" alt="Excluir registro"></td>
+            <td>${remove}</td>
         `
         return html
     },
@@ -640,7 +656,15 @@ const DOM = {
             <td>${index + 1}</td>
             <td>${author.authorName}</td>
             <td>${author.biografy}</td>
-            <td><img onclick="Author.remove(${index})" src="./assets/minus.svg" alt="Excluir registro"></td>
+            <td>
+                <i 
+                    class="fa fa-minus-square btn-remove" 
+                    title="Clique para excluir o registro" 
+                    onclick="Author.remove(${index})" 
+                    aria-hidden="true"
+                >
+                </i>
+            </td>
         `
         return html
     },
@@ -653,7 +677,15 @@ const DOM = {
             <td>${friend.email}</td>
             <td>${friend.instagram}</td>
             <td>${friend.address}</td>
-            <td><img onclick="Friend.remove(${index})" src="./assets/minus.svg" alt="Excluir registro"></td>
+            <td>
+                <i 
+                    class="fa fa-minus-square btn-remove" 
+                    title="Clique para excluir o registro" 
+                    onclick="Friend.remove(${index})" 
+                    aria-hidden="true"
+                >
+                </i>
+            </td>
         `
         return html
     },
@@ -664,7 +696,15 @@ const DOM = {
             <td>${wishlist.wishlistTitle}</td>
             <td>${wishlist.wishlistAuthor}</td>
             <td><a href="${wishlist.link}" target="_blank">Visualizar link</a></td>
-            <td><img onclick="Wishlist.remove(${index})" src="./assets/minus.svg" alt="Excluir registro"></td>
+            <td>
+                <i 
+                    class="fa fa-minus-square btn-remove" 
+                    title="Clique para excluir o registro" 
+                    onclick="Wishlist.remove(${index})" 
+                    aria-hidden="true"
+                >
+                </i>
+            </td>
         `
         return html
     },
@@ -675,8 +715,12 @@ const DOM = {
             <td>${bookLoan.book.title}</td>
             <td>${bookLoan.friend.name}</td>
             <td>${bookLoan.bookLoanDate}</td>
-            <td><img onclick="BookLoan.remove(${index})" src="./assets/minus.svg" alt="Excluir registro"></td>
+            <td>${bookLoan.bookLoanDevolutionDate}</td>
+            <td>${bookLoan.status}</td>
+            <td><i class="fa fa-calendar-o btn-calendar" title="Clique para devolver o livro" aria-hidden="true"></i></td>
+            <td><i class="fa fa-minus-square btn-remove" title="Clique para excluir o registro" onclick="BookLoan.remove(${index})" aria-hidden="true"></i></td>
         `
+
         return html
     },
 
