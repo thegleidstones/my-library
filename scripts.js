@@ -118,10 +118,15 @@ const Book = {
         return this.books
     },
 
+    changeStatus(bookId, status) {
+        Book.get()[bookId].status = status
+        Storage.setBooks(Book.get())
+    },
+
     remove(index) {
         this.books.splice(index, 1)
         DOM.callBooksTable()
-    }
+    },
 }
 
 const BookLoan = {
@@ -176,9 +181,12 @@ FormBooks = {
     createObjectBook() {
         let { title, authorId, abstract, category, publisher, published, pages, isbn } = FormBooks.getValues()
         const author = Author.get()[authorId]
+        const status = "Disponível"
+        const id = Book.get().length
         published = Utils.formatDate(published)
 
         return {
+            id,
             title, 
             author, 
             abstract, 
@@ -187,6 +195,7 @@ FormBooks = {
             published, 
             pages, 
             isbn,
+            status,
         }
     },
 
@@ -395,6 +404,18 @@ FormBookLoans = {
  
     },
 
+    updateBookStatus() {
+        let bookId = FormBookLoans.getValues().bookId
+        console.log("Pegando o id do livro selecionado na pesquisa:", bookId)
+
+        let bookOld = Book.get()[bookId]
+        console.log("Pegando o objeto book:", bookOld)
+
+        Book.changeStatus(bookId, "Emprestado")
+        let bookNew = Book.get()[bookId]
+        console.log("Pegando o book apos atualizar o status dele", bookNew)
+    },
+
     clearFields() {
         FormBookLoans.bookLoanBook.value = "",
         FormBookLoans.bookLoanFriend.value = "",
@@ -406,7 +427,9 @@ FormBookLoans = {
 
         try {            
             FormBookLoans.validateFields()
-            BookLoan.add(FormBookLoans.createObjectBookLoan())
+            let bookLoan = FormBookLoans.createObjectBookLoan()
+            BookLoan.add(bookLoan)
+            FormBookLoans.updateBookStatus()
             FormBookLoans.clearFields()
         } catch (error) {
             alert(error)
@@ -431,6 +454,7 @@ const DOM = {
             <th>Autor</th>
             <th>Editora</th>
             <th>Categoria</th>
+            <th>Status</th>
             <th></th>
         `,
         authors: 
@@ -605,6 +629,7 @@ const DOM = {
             <td>${book.author.authorName}</td>
             <td>${book.publisher}</td>
             <td>${book.category}</td>
+            <td>${book.status}</td>
             <td><img onclick="Book.remove(${index})" src="./assets/minus.svg" alt="Excluir registro"></td>
         `
         return html
@@ -681,7 +706,6 @@ const DOM = {
     },
 
     callSelects(modal) {
-        console.log("Verificando modal:", modal)
         switch(modal) {
             case "modal-overlay-books":
                 DOM.callBookSelects()
