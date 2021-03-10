@@ -1,7 +1,7 @@
 const Modal = {
     open(modal) {
         document.getElementById(modal).classList.add('active')
-        DOM.callBookLoanSelects()
+        DOM.callSelects(modal)
     },
 
     close(modal) {
@@ -152,7 +152,7 @@ Utils = {
 
 FormBooks = {
     title: document.querySelector('input#title'),
-    author:document.querySelector('input#author'),
+    author: document.querySelector('select#author'),
     abstract: document.querySelector('textarea#abstract'),
     category: document.querySelector('input#category'),
     publisher: document.querySelector('input#publisher'),
@@ -163,7 +163,7 @@ FormBooks = {
     getValues() {
         return {
             title: FormBooks.title.value,
-            author: FormBooks.author.value,
+            authorId: FormBooks.author.value,
             abstract: FormBooks.abstract.value,
             category: FormBooks.category.value,
             publisher: FormBooks.publisher.value,
@@ -173,9 +173,9 @@ FormBooks = {
         }
     },
 
-    formatFields() {
-        let { title, author, abstract, category, publisher, published, pages, isbn } = FormBooks.getValues()
-
+    createObjectBook() {
+        let { title, authorId, abstract, category, publisher, published, pages, isbn } = FormBooks.getValues()
+        const author = Author.get()[authorId]
         published = Utils.formatDate(published)
 
         return {
@@ -191,10 +191,10 @@ FormBooks = {
     },
 
     validateFields() {
-        const { title, author, abstract, category, publisher, published, pages, isbn } = FormBooks.getValues()
+        const { title, authorId, abstract, category, publisher, published, pages, isbn } = FormBooks.getValues()
 
         if (title.trim() === "" ||
-            author.trim() === "" ||
+            authorId.trim() === "" ||
             abstract.trim() === "" ||
             category.trim() === "" ||
             publisher.trim() === "" ||
@@ -220,9 +220,8 @@ FormBooks = {
         event.preventDefault()
                 
         try {
-            FormBooks.validateFields();
-            let book = FormBooks.formatFields()
-            Book.add(book)
+            FormBooks.validateFields();            
+            Book.add(FormBooks.createObjectBook())
             FormBooks.clearFields()
         } catch (error) {
             alert(error)
@@ -471,6 +470,7 @@ const DOM = {
 
     tableBodyContainer: document.querySelector('#data-table tbody'),
     tableHeadContainer: document.querySelector('#data-table thead'),
+    selectBookAuthor: document.querySelector('select#author'),
     selectBookLoanBook: document.querySelector('select#bookLoanBook'),
     selectBookLoanFriend: document.querySelector('select#bookLoanFriend'),
 
@@ -550,6 +550,22 @@ const DOM = {
         DOM.tableBodyContainer.appendChild(trBody)
     },
 
+    createBookAuthorSelect(author, index) {
+        const option = document.createElement('option')
+
+        if (index === 0) {
+            const option = document.createElement('option')
+            option.value = ""
+            option.innerHTML = "========= Selecione um escritor ========="
+            DOM.selectBookAuthor.appendChild(option)
+        }
+
+        option.value = index
+        option.innerHTML = author.authorName
+
+        DOM.selectBookAuthor.appendChild(option)
+    },
+
     createBookLoanBookSelect(book, index) {
         const option = document.createElement('option')
         
@@ -586,7 +602,7 @@ const DOM = {
         const html = `
             <td>${index + 1}</td>
             <td>${book.title}</td>
-            <td>${book.author}</td>
+            <td>${book.author.authorName}</td>
             <td>${book.publisher}</td>
             <td>${book.category}</td>
             <td><img onclick="Book.remove(${index})" src="./assets/minus.svg" alt="Excluir registro"></td>
@@ -661,12 +677,31 @@ const DOM = {
     clearSelect() {
         DOM.selectBookLoanBook.innerHTML = ""
         DOM.selectBookLoanFriend.innerHTML = ""
+        DOM.selectBookAuthor.innerHTML = ""
+    },
+
+    callSelects(modal) {
+        console.log("Verificando modal:", modal)
+        switch(modal) {
+            case "modal-overlay-books":
+                DOM.callBookSelects()
+                break
+            case "modal-overlay-bookLoans":
+                DOM.callBookLoanSelects()
+                break
+            default:
+        }
     },
 
     callBookLoanSelects() {
         DOM.clearSelect()
         Book.get().forEach(DOM.createBookLoanBookSelect)
         Friend.get().forEach(DOM.createBookLoanFriendSelect)
+    },
+
+    callBookSelects() {
+        DOM.clearSelect()
+        Author.get().forEach(DOM.createBookAuthorSelect)
     },
 
     callBooksTable() {
