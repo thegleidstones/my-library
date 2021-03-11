@@ -221,10 +221,11 @@
         </div>
     </div>
 
+    <!-- Modal & form realizar empréstimos de livros a amigos -->
     <div class="modal-overlay" id="modal-overlay-bookLoans">
         <div class="modal">
             <div class="forms" id="form-bookLoan">
-                <h2>Novo Empréstimo</h2>
+                <h2 id="headTextBookLoan">Novo Empréstimo</h2>
                 <form action="" onsubmit="FormBookLoans.submit(event)">
                     <div>
                         <label class="sr-only" for="bookLoan">Livro</label>
@@ -236,10 +237,17 @@
                         <select name="bookLoanFriend" id="bookLoanFriend">
                         </select>
                     </div>
-                    <div>
-                        <label class="sr-only" for="bookLoanDate">Data empréstimo</label>
-                        <input type="date" name="bookLoanDate" id="bookLoanDate">
-                        <small>data do empréstimo</small>
+                    <div class="dates">
+                        <div class="bookLoanDate">
+                            <label class="sr-only" for="bookLoanDate">Data empréstimo</label>
+                            <input type="date" name="bookLoanDate" id="bookLoanDate">
+                            <small>data do empréstimo</small>
+                        </div>
+                        <div class="bookLoanDevolutionDate">
+                            <label class="sr-only" for="bookLoanDevolutionDate">Data devolução</label>
+                            <input type="date" disabled name="bookLoanDevolutionDate" id="bookLoanDevolutionDate">
+                            <small>data da devolução</small>
+                        </div>
                     </div>
                     <div class="input-group">
                         <a href="#" onclick="Modal.close('modal-overlay-bookLoans')" class="button cancel">Cancelar</a>
