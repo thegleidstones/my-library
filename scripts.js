@@ -140,8 +140,11 @@ const BookLoan = {
 
     bookLoanReturn(bookLoan) {
         BookLoan.get()[bookLoan.id] = bookLoan
+        Storage.setBookLoans(BookLoan.get())
+
         const book = BookLoan.get()[bookLoan.id].book
         Book.changeStatus(book.id, "Disponível")
+
         DOM.callBookLoansTable()
     },
 
@@ -301,6 +304,7 @@ FormFriends = {
 
     getValues() {
         return {
+            id: Friend.get().length,
             name: FormFriends.name.value,
             cellphone: FormFriends.cellphone.value,
             email: FormFriends.email.value,
@@ -389,6 +393,8 @@ FormBookLoans = {
     bookLoanFriend: document.querySelector('select#bookLoanFriend'),
     bookLoanDate: document.querySelector('input#bookLoanDate'),
     bookLoanDevolutionDate: document.querySelector('input#bookLoanDevolutionDate'),
+    loanOrReturn: document.querySelector('input#loanOrReturn'),
+    bookLoanId: document.querySelector('input#bookLoanId'),
     
     getValues() {
         return {
@@ -416,7 +422,26 @@ FormBookLoans = {
             status
         }
     },
-    
+
+    createObjectBookLoanReturn() {
+        let { bookId, friendId, bookLoanDate, bookLoanDevolutionDate } = FormBookLoans.getValues()
+        const id = FormBookLoans.bookLoanId.value
+        const book = Book.get()[bookId]
+        const friend = Friend.get()[friendId]
+        const status = "Devolvido"
+        bookLoanDate = Utils.formatDate(bookLoanDate)
+        bookLoanDevolutionDate = Utils.formatDate(bookLoanDevolutionDate)
+
+        return {
+            id,
+            book,
+            friend,
+            bookLoanDate,
+            bookLoanDevolutionDate,
+            status
+        }
+    },
+
     validateFields() {
         const { bookId, friendId, bookLoanDate } = FormBookLoans.getValues()
 
@@ -424,6 +449,14 @@ FormBookLoans = {
             friendId.trim() === "" || 
             bookLoanDate.trim() === "") {
             throw new Error("Por favor, informe os dados para empréstimo do livro")
+        } 
+    },
+
+    validateFieldsReturn() {
+        const { bookLoanDevolutionDate } = FormBookLoans.getValues()
+
+        if (bookLoanDevolutionDate.trim() === "") {
+            throw new Error("Por favor, informe os dados para devolução do livro")
         } 
     },
 
@@ -442,12 +475,20 @@ FormBookLoans = {
     submit(event) {
         event.preventDefault()
 
-        try {            
-            FormBookLoans.validateFields()
-            let bookLoan = FormBookLoans.createObjectBookLoan()
-            BookLoan.add(bookLoan)
-            FormBookLoans.updateBookStatus()
-            FormBookLoans.clearFields()
+        try {
+            if (FormBookLoans.loanOrReturn.value === "loan") {
+                FormBookLoans.validateFields()
+                let bookLoan = FormBookLoans.createObjectBookLoan()
+                BookLoan.add(bookLoan)
+                FormBookLoans.updateBookStatus()
+                FormBookLoans.clearFields()
+            } else {
+                FormBookLoans.validateFieldsReturn()
+                let bookLoan = FormBookLoans.createObjectBookLoanReturn()
+                console.log(bookLoan)
+                BookLoan.bookLoanReturn(bookLoan)
+                FormBookLoans.clearFields()
+            }
         } catch (error) {
             alert(error)
         }
@@ -525,12 +566,17 @@ const DOM = {
         const bookLoanDate = document.querySelector('input#bookLoanDate')
         const bookLoanDevolutionDate = document.querySelector('input#bookLoanDevolutionDate')
         const headTextBookLoan = document.querySelector('h2#headTextBookLoan')
+        const loanOrReturn = document.querySelector('input#loanOrReturn')
+        const bookLoanId = document.querySelector('input#bookLoanId')
         
 
         Modal.open(DOM.modalOverlay.bookLoans)
         DOM.clearSelect()
 
         console.log(bookLoan)
+
+        loanOrReturn.value = "return"
+        bookLoanId.value = index
 
         headTextBookLoan.innerHTML = "Devolução de empréstimo"
         DOM.selectBookLoanBook.disabled = true
@@ -556,8 +602,10 @@ const DOM = {
         const headTextBookLoan = document.querySelector('h2#headTextBookLoan')
         const bookLoanDate = document.querySelector('input#bookLoanDate')
         const bookLoanDevolutionDate = document.querySelector('input#bookLoanDevolutionDate')
+        const loanOrReturn = document.querySelector('input#loanOrReturn')
 
         headTextBookLoan.innerHTML = "Novo empréstimo"
+        loanOrReturn.value = "loan"
 
         bookLoanDate.value = ""
         bookLoanDate.disabled = false
@@ -777,6 +825,32 @@ const DOM = {
     },
 
     createBookLoanTableData(bookLoan, index) {
+        const remove = bookLoan.status === "Devolvido" ? "" 
+            : `
+            <i 
+                class="fa fa-minus-square btn-remove" 
+                title="Clique para excluir o empréstimo do livro" 
+                onclick="BookLoan.remove(${index})" 
+                aria-hidden="true"
+            >
+            </i>`
+        const devolution = bookLoan.status === "Devolvido" 
+            ? 
+            `<i 
+                class="fa fa-calendar-check-o btn-calendar-return" 
+                title="Livro devolvido!" 
+                aria-hidden="true"
+            >
+            </i>` 
+            : 
+            `<i 
+                class="fa fa-calendar-o btn-calendar" 
+                title="Clique para devolver o livro"  
+                onclick="DOM.showReturnBookLoanUpdate(${index})" 
+                aria-hidden="true"
+            >
+            </i>`
+
         const html = `
             <td>${index + 1}</td>
             <td>${bookLoan.book.title}</td>
@@ -784,8 +858,8 @@ const DOM = {
             <td>${bookLoan.bookLoanDate}</td>
             <td>${bookLoan.bookLoanDevolutionDate}</td>
             <td>${bookLoan.status}</td>
-            <td><i class="fa fa-calendar-o btn-calendar" title="Clique para devolver o livro"  onclick="DOM.showReturnBookLoanUpdate(${index})" aria-hidden="true"></i></td>
-            <td><i class="fa fa-minus-square btn-remove" title="Clique para excluir o registro" onclick="BookLoan.remove(${index})" aria-hidden="true"></i></td>
+            <td>${devolution}</td>
+            <td>${remove}</td>
         `
 
         return html
