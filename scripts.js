@@ -6,6 +6,7 @@ const Modal = {
 
     close(modal) {
         document.getElementById(modal).classList.remove('active')
+        DOM.resetModal(modal)
     }
 }
 
@@ -137,6 +138,13 @@ const BookLoan = {
         DOM.callBookLoansTable()
     },
 
+    bookLoanReturn(bookLoan) {
+        BookLoan.get()[bookLoan.id] = bookLoan
+        const book = BookLoan.get()[bookLoan.id].book
+        Book.changeStatus(book.id, "Disponível")
+        DOM.callBookLoansTable()
+    },
+
     get() {
         return this.bookLoans
     },
@@ -156,6 +164,12 @@ Utils = {
         return `${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`
 
     },
+
+    formatDateISO(date) {
+        const dateArray = date.split('/')
+        return `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`
+
+    }
 }
 
 FormBooks = {
@@ -374,23 +388,24 @@ FormBookLoans = {
     bookLoanBook: document.querySelector('select#bookLoanBook'),
     bookLoanFriend: document.querySelector('select#bookLoanFriend'),
     bookLoanDate: document.querySelector('input#bookLoanDate'),
+    bookLoanDevolutionDate: document.querySelector('input#bookLoanDevolutionDate'),
     
     getValues() {
         return {
             bookId: FormBookLoans.bookLoanBook.value,
             friendId: FormBookLoans.bookLoanFriend.value,
-            bookLoanDate: FormBookLoans.bookLoanDate.value
+            bookLoanDate: FormBookLoans.bookLoanDate.value,
+            bookLoanDevolutionDate: FormBookLoans.bookLoanDevolutionDate.value,
         }
     },
 
     createObjectBookLoan() {
-        let { bookId, friendId, bookLoanDate } = FormBookLoans.getValues()
+        let { bookId, friendId, bookLoanDate, bookLoanDevolutionDate } = FormBookLoans.getValues()
         const id = BookLoan.get().length
         const book = Book.get()[bookId]
         const friend = Friend.get()[friendId]
         const status = "Em Aberto"
         bookLoanDate = Utils.formatDate(bookLoanDate)
-        bookLoanDevolutionDate = ""
 
         return {
             id,
@@ -420,7 +435,8 @@ FormBookLoans = {
     clearFields() {
         FormBookLoans.bookLoanBook.value = "",
         FormBookLoans.bookLoanFriend.value = "",
-        FormBookLoans.bookLoanDate.value = ""
+        FormBookLoans.bookLoanDate.value = "",
+        FormBookLoans.bookLoanDevolutionDate.value = ""
     },
 
     submit(event) {
@@ -501,6 +517,57 @@ const DOM = {
     selectBookAuthor: document.querySelector('select#author'),
     selectBookLoanBook: document.querySelector('select#bookLoanBook'),
     selectBookLoanFriend: document.querySelector('select#bookLoanFriend'),
+    
+    showReturnBookLoanUpdate(index) {
+        const bookLoan = BookLoan.get()[index]
+        const optionBook = document.createElement('option')
+        const optionFriend = document.createElement('option')
+        const bookLoanDate = document.querySelector('input#bookLoanDate')
+        const bookLoanDevolutionDate = document.querySelector('input#bookLoanDevolutionDate')
+        const headTextBookLoan = document.querySelector('h2#headTextBookLoan')
+        
+
+        Modal.open(DOM.modalOverlay.bookLoans)
+        DOM.clearSelect()
+
+        console.log(bookLoan)
+
+        headTextBookLoan.innerHTML = "Devolução de empréstimo"
+        DOM.selectBookLoanBook.disabled = true
+        DOM.selectBookLoanFriend.disabled = true
+       
+        optionBook.selected = true
+        optionBook.value = bookLoan.book.id
+        optionBook.innerHTML = bookLoan.book.title
+
+        optionFriend.selected = true
+        optionFriend.value = bookLoan.friend.id
+        optionFriend.innerHTML = bookLoan.friend.name
+
+        bookLoanDate.value = Utils.formatDateISO(bookLoan.bookLoanDate)
+        bookLoanDate.disabled = true
+        bookLoanDevolutionDate.disabled = false
+
+        DOM.selectBookLoanBook.appendChild(optionBook)
+        DOM.selectBookLoanFriend.appendChild(optionFriend)
+    },
+
+    resetModalBookLoan() {
+        const headTextBookLoan = document.querySelector('h2#headTextBookLoan')
+        const bookLoanDate = document.querySelector('input#bookLoanDate')
+        const bookLoanDevolutionDate = document.querySelector('input#bookLoanDevolutionDate')
+
+        headTextBookLoan.innerHTML = "Novo empréstimo"
+
+        bookLoanDate.value = ""
+        bookLoanDate.disabled = false
+        
+        bookLoanDevolutionDate.value = ""
+        bookLoanDevolutionDate.disabled = true
+
+        DOM.selectBookLoanBook.disabled = false
+        DOM.selectBookLoanFriend.disabled = false
+    },
 
     toggleTheme(event) {
         event.preventDefault()
@@ -717,7 +784,7 @@ const DOM = {
             <td>${bookLoan.bookLoanDate}</td>
             <td>${bookLoan.bookLoanDevolutionDate}</td>
             <td>${bookLoan.status}</td>
-            <td><i class="fa fa-calendar-o btn-calendar" title="Clique para devolver o livro" aria-hidden="true"></i></td>
+            <td><i class="fa fa-calendar-o btn-calendar" title="Clique para devolver o livro"  onclick="DOM.showReturnBookLoanUpdate(${index})" aria-hidden="true"></i></td>
             <td><i class="fa fa-minus-square btn-remove" title="Clique para excluir o registro" onclick="BookLoan.remove(${index})" aria-hidden="true"></i></td>
         `
 
@@ -747,6 +814,15 @@ const DOM = {
         DOM.selectBookLoanBook.innerHTML = ""
         DOM.selectBookLoanFriend.innerHTML = ""
         DOM.selectBookAuthor.innerHTML = ""
+    },
+
+    resetModal(modal) {
+        switch(modal) {
+            case "modal-overlay-bookLoans":
+                DOM.resetModalBookLoan()
+                break
+            default:
+        }
     },
 
     callSelects(modal) {
