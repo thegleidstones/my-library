@@ -451,6 +451,18 @@ table tbody tr td .btn-remove {
 }
 
 /* Form Book Loan ========================================*/
+#form-bookLoan .dates {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+#form-bookLoan .dates .bookLoanDate,
+#form-bookLoan .dates .bookLoanDevolutionDate {
+    width: 100%;
+}
+
 #modal-overlay-bookLoans {
     opacity: 0;
     visibility: hidden;
