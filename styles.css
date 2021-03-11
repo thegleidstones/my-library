@@ -265,6 +265,11 @@ table tbody tr td .btn-calendar {
     color: var(--btn-list);
 }
 
+table tbody tr td .btn-calendar-return {
+    font-size: 2rem;
+    color: var(--btn-save);
+}
+
 table tbody tr td .btn-remove {
     cursor: pointer;
     font-size: 2rem;
