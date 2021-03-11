@@ -51,6 +51,14 @@ Storage = {
     setBookLoans(bookLoans) {
         localStorage.setItem("my-library:bookLoans", JSON.stringify(bookLoans))
     },
+    
+    getTheme() {
+        return JSON.parse(localStorage.getItem("my-library:theme")) || []
+    },
+
+    setTheme(theme) {
+        localStorage.setItem("my-library:theme", JSON.stringify(theme))
+    },
 }
 
 const Friend = {
@@ -622,14 +630,39 @@ const DOM = {
 
         const bodyClass = document.body.classList.value
         const buttonToggle = document.querySelector('.btn-toogle')
+        let theme = {}
 
         if (bodyClass === "light-theme") {
             document.body.classList.replace("light-theme", "dark-theme")
             buttonToggle.innerHTML = "Light Theme"
+            theme = { theme: "dark-theme", button: "Light Theme"}
+            Storage.setTheme(theme)
         } else {
             document.body.classList.replace("dark-theme", "light-theme")
             buttonToggle.innerHTML = "Dark Theme"
+            theme = { theme: "light-theme", button: "Dark Theme"}
+            Storage.setTheme(theme)
         }
+    },
+
+    loadTheme() {
+        document.addEventListener("DOMContentLoaded", event => {
+            const bodyClass = document.body.classList.value
+            const buttonToggle = document.querySelector('.btn-toogle')
+            const theme = Storage.getTheme()
+
+            console.log("O que temos aqui no theme:", theme)
+
+            if (theme.length === 0) {
+
+            } else if (theme.theme === "light-theme") {
+                document.body.className = theme.theme
+                buttonToggle.innerHTML = theme.button
+            } else {
+                document.body.className = theme.theme
+                buttonToggle.innerHTML = theme.button
+            }
+        })
     },
 
     createBookTable(book, index) {
@@ -961,6 +994,7 @@ const DOM = {
 const App = {
     init() {
         Book.get().forEach(DOM.createBookTable)
+        DOM.loadTheme()
     }
 }
 
