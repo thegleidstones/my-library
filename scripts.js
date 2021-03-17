@@ -179,7 +179,6 @@ Utils = {
     formatDateISO(date) {
         const dateArray = date.split('/')
         return `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`
-
     }
 }
 
@@ -512,6 +511,14 @@ const DOM = {
         bookLoans: 'modal-overlay-bookLoans',
     },
 
+    cards: {
+        book: 'cardBook',
+        author: 'cardAuthor',
+        friend: 'cardFriend',
+        wishlist: 'cardWishlist',
+        bookLoan: 'cardBookLoan'
+    },
+
     tableHeads: {
         books: 
         `
@@ -645,13 +652,20 @@ const DOM = {
         }
     },
 
+    toggleActiveCard(card) {
+        for (const key in DOM.cards) {
+            const cardBook = document.querySelector(`div#${DOM.cards[key]}`)
+            cardBook.classList.remove('active')
+        }
+        const cardActive = document.querySelector(`div#${card}`)
+        cardActive.classList.toggle('active')
+    },
+
     loadTheme() {
         document.addEventListener("DOMContentLoaded", event => {
             const bodyClass = document.body.classList.value
             const buttonToggle = document.querySelector('.btn-toogle')
             const theme = Storage.getTheme()
-
-            console.log("O que temos aqui no theme:", theme)
 
             if (theme.length === 0) {
 
@@ -960,6 +974,7 @@ const DOM = {
         Book.get().forEach(DOM.createBookTable)
         Storage.setBooks(Book.get())
         Modal.close(DOM.modalOverlay.books)
+        DOM.toggleActiveCard(DOM.cards.book);
     },
 
     callAuthorsTable() {
@@ -967,6 +982,7 @@ const DOM = {
         Author.get().forEach(DOM.createAuthorTable)
         Storage.setAuthors(Author.get())
         Modal.close(DOM.modalOverlay.authors)
+        DOM.toggleActiveCard(DOM.cards.author);
     },
 
     callFriendsTable() {
@@ -974,6 +990,7 @@ const DOM = {
         Friend.get().forEach(DOM.createFriendTable)
         Storage.setFriends(Friend.get())
         Modal.close(DOM.modalOverlay.friends)
+        DOM.toggleActiveCard(DOM.cards.friend);
     },
 
     callWishlistTable() {
@@ -981,6 +998,7 @@ const DOM = {
         Wishlist.get().forEach(DOM.createWishlistTable)
         Storage.setWishlist(Wishlist.get())
         Modal.close(DOM.modalOverlay.wishlist)
+        DOM.toggleActiveCard(DOM.cards.wishlist);
     },
 
     callBookLoansTable() {
@@ -988,12 +1006,13 @@ const DOM = {
         BookLoan.get().forEach(DOM.createBookLoanTable)
         Storage.setBookLoans(BookLoan.get())
         Modal.close(DOM.modalOverlay.bookLoans)
+        DOM.toggleActiveCard(DOM.cards.bookLoan);
     }
 }
 
 const App = {
     init() {
-        Book.get().forEach(DOM.createBookTable)
+        DOM.callBooksTable()
         DOM.loadTheme()
     }
 }
