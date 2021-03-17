@@ -13,6 +13,8 @@ body.light-theme {
 
     --card-color: #5e385e; 
     --card-border: #9c5794;
+    --card-active-bkg: #a03a94;
+    --card-active-txt: #f0f2f5;
 
     --tbl-text: #9c5794;
     --tbl-head: #f4decb;
@@ -49,6 +51,8 @@ body.dark-theme {
 
     --card-color: #21262d; 
     --card-border: #484f58;
+    --card-active-bkg: #79c0ff;
+    --card-active-txt: #161b22;
 
     --tbl-head-bkg: #21262d;
     --tbl-head-text: #c9d1d9;
@@ -221,8 +225,8 @@ header h1 {
 }
 
 .card.active {
-    background-color: var(--card-color);
-    color: var(--logo-text);
+    background-color: var(--card-active-bkg);
+    color: var(--card-active-txt);
 }
 
 .card img {
