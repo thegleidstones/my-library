@@ -31,35 +31,35 @@
     <main class="container">
         <section id="cards">
             <a href="#" name="buttonBooks" onclick="Modal.open('modal-overlay-books')">
-                <div class="card">
+                <div class="card" id="cardBook">
                     <h2>+Livros</h2>
                     <img src="./assets/book-01.svg" alt="">
                 </div>
             </a>
 
             <a href="#" onclick="Modal.open('modal-overlay-authors')">
-                <div class="card">
+                <div class="card" id="cardAuthor">
                     <h2>+Escritores</h2>
                     <img src="./assets/author-01.svg" alt="Autores">
                 </div>
             </a>
 
             <a href="#" onclick="Modal.open('modal-overlay-friends')">
-                <div class="card">
+                <div class="card" id="cardFriend">
                     <h2>+Amigos</h2>
                     <img src="./assets/friend-01.svg" alt="Amigos">
                 </div>
             </a>
 
             <a href="#" onclick="Modal.open('modal-overlay-bookLoans')">
-                <div class="card">
+                <div class="card" id="cardBookLoan">
                     <h2>+Empréstimos</h2>
                     <img src="./assets/book-loan.svg" alt="Empréstimos de livro">
                 </div>
             </a>
 
             <a href="#" onclick="Modal.open('modal-overlay-wishlist')">
-                <div class="card">
+                <div class="card" id="cardWishlist">
                     <h2>+Lista de Desejos</h2>
                     <img src="./assets/wishlist-01.svg" alt="">
                 </div>
@@ -80,7 +80,7 @@
     <div class="modal-overlay" id="modal-overlay-books">
         <div class="modal">
             <div class="forms" id="form-books">
-                <h2>Novo Livro</h2>
+                <h2 class="headTextForm">Novo Livro</h2>
                 <form action="" onsubmit="FormBooks.submit(event)">
                     <div>
                         <label class="sr-only" for="title">Título</label>
@@ -135,7 +135,7 @@
     <div class="modal-overlay" id="modal-overlay-authors">
         <div class="modal">
             <div class="forms" id="form-authors">
-                <h2>Novo Escritor</h2>
+                <h2 class="headTextForm">Novo Escritor</h2>
                 <form action="" onsubmit="FormAuthors.submit(event)">
                     <div>
                         <label class="sr-only" for="authorName">Nome</label>
@@ -160,7 +160,7 @@
     <div class="modal-overlay" id="modal-overlay-friends">
         <div class="modal">
             <div class="forms" id="form-friends">
-                <h2>Novo Amigo</h2>
+                <h2 class="headTextForm">Novo Amigo</h2>
                 <form action="" onsubmit="FormFriends.submit(event)">
                     <div>
                         <label class="sr-only" for="name">Nome</label>
@@ -196,7 +196,7 @@
     <div class="modal-overlay" id="modal-overlay-wishlist">
         <div class="modal">
             <div class="forms" id="form-wishlist">
-                <h2>Novo item da lista de desejos</h2>
+                <h2 class="headTextForm">Novo item da lista de desejos</h2>
                 <form action="" onsubmit="FormWishlist.submit(event)">
                     <div>
                         <label class="sr-only" for="wishlistTitle">Título</label>
@@ -221,11 +221,11 @@
         </div>
     </div>
 
-    <!-- Modal & form realizar empréstimos de livros a amigos -->
+    <!-- Modal & form para realizar empréstimos de livros a amigos -->
     <div class="modal-overlay" id="modal-overlay-bookLoans">
         <div class="modal">
             <div class="forms" id="form-bookLoan">
-                <h2 id="headTextBookLoan">Novo Empréstimo</h2>
+                <h2 class="headTextForm" id="headTextBookLoan">Novo Empréstimo</h2>
                 <form action="" onsubmit="FormBookLoans.submit(event)">
                     <div>
                         <label class="sr-only" for="bookLoan">Livro</label>
