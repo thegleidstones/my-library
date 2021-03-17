@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 body.light-theme {
@@ -39,7 +40,6 @@ body.light-theme {
     --footer-color: #79c0ff;
     
     background: var(--bkg-color);
-    font-family: 'Poppins', sans-serif;
 }
 
 body.dark-theme {
@@ -123,7 +123,6 @@ body.dark-theme {
     --color-scale-orange-7: #762d0a;
 
     background: var(--bkg-color);
-    font-family: 'Poppins', sans-serif;
 }
 
 .sr-only {
@@ -144,7 +143,6 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-family: 'Poppins', sans-serif;
     color: var(--logo-text);
     background: var(--header-bkg);    
 }
@@ -166,20 +164,31 @@ header .btn-toogle {
 }
 
 header img {
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+header h1 {
+    font-size: 2rem;
 }
 
 /* Main ==========================================*/
 .container {
-    width: min(90vw, 900px);
+    width: min(90vw, 1300px);
     margin: auto;
 }
 
 #cards {
     color: var(--card-color);
     margin-top: -2rem;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.25rem;
+    transition: 0.5s;
 }
+
 .card {
     display: flex;
     align-items: center;
@@ -207,6 +216,11 @@ header img {
 }
 
 .card:hover {
+    background-color: var(--card-color);
+    color: var(--logo-text);
+}
+
+.card.active {
     background-color: var(--card-color);
     color: var(--logo-text);
 }
@@ -305,9 +319,10 @@ table tbody tr td .btn-remove {
     max-width: 500px;    
 }
 
-.forms h2{
-    margin-top: 0;
+.forms .headTextForm {
     color: var(--text-header);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
 }
 
 .forms input {
@@ -433,6 +448,10 @@ table tbody tr td .btn-remove {
     visibility: visible;
 }
 
+#form-friends {
+    min-width: 400px;
+}
+
 /* Form Authors ==========================================*/
 #modal-overlay-authors {
     opacity: 0;
@@ -444,7 +463,7 @@ table tbody tr td .btn-remove {
     visibility: visible;
 }
 
-/* Form Authors ==========================================*/
+/* Form Wishlist ==========================================*/
 #modal-overlay-wishlist {
     opacity: 0;
     visibility: hidden;
@@ -456,6 +475,10 @@ table tbody tr td .btn-remove {
 }
 
 /* Form Book Loan ========================================*/
+#form-bookLoan {
+    width: 400px;
+}
+
 #form-bookLoan .dates {
     display: flex;
     justify-content: space-between;
@@ -493,7 +516,7 @@ button {
     font-size: 1rem;
     font-family: 'Poppins', sans-serif;
 
-    height: 50px;
+    height: 45px;
     
     display: flex;
     align-items: center;
@@ -506,43 +529,32 @@ button:hover {
     opacity: 1;
 }
 
-.button.cancel {
-    color: var(--btn-cancel);
-    border: 3px var(--btn-cancel) solid;
+.button {
     border-radius: 0.25rem;
 
     font-size: 1rem;
 
-    height: 50px;
+    height: 45px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     opacity: 0.6;
+}
+
+.button.cancel {
+    color: var(--btn-cancel);
+    border: 3px var(--btn-cancel) solid;
+
 }
 
 .button.list {
     color: var(--btn-list);
     border: 3px var(--btn-list) solid;
-    border-radius: 0.25rem;
-
-    font-size: 1rem;
-
-    height: 50px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    opacity: 0.6;
 }
 
-.button.cancel:hover {
-    opacity: 1;
-}
-
-.button.list:hover {
+.button:hover {
     opacity: 1;
 }
 
@@ -553,6 +565,8 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
 }
 
 footer a {
@@ -561,18 +575,104 @@ footer a {
 
 
 /* Responsive ======================================*/
-@media(min-width: 900px) {
+@media(max-width: 1000px) {
     .container {
         min-height: 500px;
     }
 
     #cards {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 0.25rem;
     }
 
     #form-friends {
         width: 400px;
+    }
+}
+
+@media(max-width: 830px) {
+    header .btn-toogle {
+        font-size: 0.8rem;
+        width: 100px;
+    }
+    
+    header img {
+        height: 70px;
+        width: 70px;
+        margin-right: 1rem;
+        margin-left: 1rem;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .container {
+        min-height: 500px;
+    }
+
+    #cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.25rem;
+    }
+
+    #form-books,
+    #form-bookLoan,
+    #form-friends {
+        width: 400px;
+    }
+
+    button,
+    .button {    
+        font-size: 0.8rem;
+        height: 35px;
+    }
+}
+
+@media(max-width: 660px) { 
+    header img {
+        height: 60px;
+        width: 60px;
+        margin-right: 1rem;
+        margin-left: 1rem;  
+    }
+
+    header h1 {
+        font-size: 1.4rem;
+    }
+
+    #cards {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.25rem;
+    }
+}
+
+@media(max-width: 530px) {
+    header img {
+        height: 50px;
+        width: 50px;
+        margin-right: 1rem;
+        margin-left: 1rem;  
+    }
+
+    header h1 {
+        font-size: 1.3rem;
+    }
+
+    .card {
+        height: 60px;
+    }
+
+    .card img {
+        margin-left: 0.5rem;
+    }
+
+    #cards {
+        display: grid;
+        grid-template-columns: 100%;
+        gap: 0.25rem;
     }
 }
