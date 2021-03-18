@@ -76,6 +76,12 @@ const Friend = {
 	remove(index) {
 		this.friends.splice(index, 1)
 		DOM.callFriendsTable()
+	},
+
+	update(friend) {
+		Friend.get()[friend.id] = friend
+		Storage.setFriends(Friend.get())
+		DOM.callFriendsTable()
 	}
 }
 
@@ -272,9 +278,9 @@ FormBooks = {
 }
 
 FormAuthors = {
+	authorId: document.querySelector('input#authorId'),
 	authorName: document.querySelector('input#authorName'),
 	biografy: document.querySelector('textarea#biografy'),
-	authorId: document.querySelector('input#authorId'),
 
 	getValues() {
 		return {
@@ -321,6 +327,7 @@ FormAuthors = {
 }
 
 FormFriends = {
+	id: document.querySelector('input#friendId'),
 	name: document.querySelector('input#name'),
 	cellphone: document.querySelector('input#cellphone'),
 	email: document.querySelector('input#email'),
@@ -329,7 +336,7 @@ FormFriends = {
 
 	getValues() {
 		return {
-			id: Friend.get().length,
+			id: FormFriends.id.value,
 			name: FormFriends.name.value,
 			cellphone: FormFriends.cellphone.value,
 			email: FormFriends.email.value,
@@ -351,6 +358,7 @@ FormFriends = {
 	},
 
 	clearFields() {
+		FormFriends.id.value = "new"
 		FormFriends.name.value = ""
 		FormFriends.cellphone.value = ""
 		FormFriends.email.value = ""
@@ -362,9 +370,18 @@ FormFriends = {
 		event.preventDefault()
 
 		try {
-			FormFriends.validateFields()
-			Friend.add(FormFriends.getValues())
-			FormFriends.clearFields()
+			let friend = FormFriends.getValues()
+
+			if (friend.id.trim() === "new") {
+				friend.id = Friend.get().length
+				FormFriends.validateFields()
+				Friend.add(friend)
+				FormFriends.clearFields()
+			} else {
+				FormFriends.validateFields()
+				Friend.update(friend)
+				FormFriends.clearFields()
+			}
 		} catch (error) {
 			alert(error)
 		}
@@ -565,6 +582,7 @@ const DOM = {
 				<th>instagram</th>
 				<th>Endereço</th>
 				<th></th>
+				<th></th>
 			`,
 		wishlists:
 			`
@@ -620,6 +638,30 @@ const DOM = {
 		authorName.value = ""
 		biografy.value = ""
 		headTextAuthor.innerHTML = "Novo Escritor"
+	},
+
+	editFriend(index) {
+		const headTextFriend = document.querySelector('h2#headTextFriend')
+		const friend = Friend.get()[index]
+
+		Modal.open(DOM.modalOverlay.friends)
+
+		headTextFriend.innerHTML = "Alteração de amigo"
+
+		FormFriends.id.value = friend.id
+		FormFriends.name.value = friend.name
+		FormFriends.cellphone.value = friend.cellphone
+		FormFriends.email.value = friend.email
+		FormFriends.instagram.value = friend.instagram
+		FormFriends.address.value = friend.address
+	},
+
+	resetModalFriend() {
+		const headTextFriend = document.querySelector('h2#headTextFriend')
+
+		headTextFriend.innerHTML = "Novo amigo"
+
+		FormFriends.clearFields()
 	},
 
 	showReturnBookLoanUpdate(index) {
@@ -896,6 +938,15 @@ const DOM = {
 			<td>${friend.instagram}</td>
 			<td>${friend.address}</td>
 			<td>
+				<i 
+					class="fa fa-pencil-square btn-edit" 
+					title="Clique para editar o registro"
+					onclick="DOM.editFriend(${index})" 
+					aria-hidden="true"
+				>
+				</i>
+			</td>
+			<td>
 					<i 
 							class="fa fa-minus-square btn-remove" 
 							title="Clique para excluir o registro" 
@@ -1004,6 +1055,10 @@ const DOM = {
 				break
 			case DOM.modalOverlay.authors:
 				DOM.resetModalAuthor()
+				break
+			case DOM.modalOverlay.friends:
+				DOM.resetModalFriend()
+				break
 			default:
 		}
 	},
