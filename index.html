@@ -82,11 +82,12 @@
 	<div class="modal-overlay" id="modal-overlay-books">
 		<div class="modal">
 			<div class="forms" id="form-books">
-				<h2 class="headTextForm">Novo Livro</h2>
+				<h2 class="headTextForm" id="headTextBook">Novo Livro</h2>
 				<form action="" onsubmit="FormBooks.submit(event)">
 					<div>
 						<label class="sr-only" for="title">Título</label>
 						<input type="text" name="title" id="title" placeholder="Título" />
+						<input type="hidden" name="" id="bookId" value="new">
 					</div>
 					<div>
 						<label class="sr-only" for="author">Autor</label>
