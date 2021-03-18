@@ -299,6 +299,7 @@ FormAuthors = {
 	},
 
 	clearFields() {
+		FormAuthors.authorId.value = "new"
 		FormAuthors.authorName.value = ""
 		FormAuthors.biografy.value = ""
 	},
@@ -613,31 +614,24 @@ const DOM = {
 
 	editAuthor(index) {
 		const author = Author.get()[index]
-		const authorId = document.querySelector('input#authorId')
-		const authorName = document.querySelector('input#authorName')
-		const biografy = document.querySelector('textarea#biografy')
+
 		const headTextAuthor = document.querySelector('h2#headTextAuthor')
 
 		Modal.open(DOM.modalOverlay.authors)
 
 		headTextAuthor.innerHTML = "Alteração de Escritor"
 
-		authorId.value = author.id
-		authorName.value = author.authorName
-		biografy.value = author.biografy
-
+		FormAuthors.authorId.value = author.id
+		FormAuthors.authorName.value = author.authorName
+		FormAuthors.biografy.value = author.biografy
 	},
 
 	resetModalAuthor() {
-		const authorId = document.querySelector('input#authorId')
-		const authorName = document.querySelector('input#authorName')
-		const biografy = document.querySelector('textarea#biografy')
 		const headTextAuthor = document.querySelector('h2#headTextAuthor')
 
-		authorId.value = "new"
-		authorName.value = ""
-		biografy.value = ""
 		headTextAuthor.innerHTML = "Novo Escritor"
+
+		FormAuthors.clearFields()
 	},
 
 	editFriend(index) {
