@@ -154,6 +154,12 @@ const Book = {
 		this.books.splice(index, 1)
 		DOM.callBooksTable()
 	},
+
+	update(book) {
+		Book.get()[book.id] = book
+		Storage.setBooks(Book.get())
+		DOM.callBooksTable()
+	}
 }
 
 const BookLoan = {
@@ -201,6 +207,7 @@ Utils = {
 }
 
 FormBooks = {
+	id: document.querySelector('input#bookId'),
 	title: document.querySelector('input#title'),
 	author: document.querySelector('select#author'),
 	abstract: document.querySelector('textarea#abstract'),
@@ -212,6 +219,7 @@ FormBooks = {
 
 	getValues() {
 		return {
+			id: FormBooks.id.value,
 			title: FormBooks.title.value,
 			authorId: FormBooks.author.value,
 			abstract: FormBooks.abstract.value,
@@ -224,10 +232,9 @@ FormBooks = {
 	},
 
 	createObjectBook() {
-		let { title, authorId, abstract, category, publisher, published, pages, isbn } = FormBooks.getValues()
+		let {id, title, authorId, abstract, category, publisher, published, pages, isbn } = FormBooks.getValues()
 		const author = Author.get()[authorId]
 		const status = "Disponível"
-		const id = Book.get().length
 		published = Utils.formatDate(published)
 
 		return {
@@ -260,6 +267,7 @@ FormBooks = {
 	},
 
 	clearFields() {
+		FormBooks.id.value = "new"
 		FormBooks.title.value = ""
 		FormBooks.author.value = ""
 		FormBooks.abstract.value = ""
@@ -274,9 +282,18 @@ FormBooks = {
 		event.preventDefault()
 
 		try {
-			FormBooks.validateFields();
-			Book.add(FormBooks.createObjectBook())
-			FormBooks.clearFields()
+			let book = FormBooks.createObjectBook()
+
+			if (book.id.trim() === "new") {
+				book.id = Book.get().length
+				FormBooks.validateFields();
+				Book.add(book)
+				FormBooks.clearFields()
+			} else {
+				FormBooks.validateFields();
+				Book.update(book)
+				FormBooks.clearFields()
+			}
 		} catch (error) {
 			alert(error)
 		}
@@ -583,6 +600,7 @@ const DOM = {
 				<th>Categoria</th>
 				<th>Status</th>
 				<th></th>
+				<th></th>
 			`,
 		authors:
 			`
@@ -630,6 +648,32 @@ const DOM = {
 	selectBookAuthor: document.querySelector('select#author'),
 	selectBookLoanBook: document.querySelector('select#bookLoanBook'),
 	selectBookLoanFriend: document.querySelector('select#bookLoanFriend'),
+
+	editBook(index) {
+		const book = Book.get()[index]
+		const headTextBook = document.querySelector('h2#headTextBook')
+		
+		Modal.open(DOM.modalOverlay.books)		
+		
+		headTextBook.innerHTML = "Alteração de livro"
+
+		FormBooks.id.value = book.id
+		FormBooks.title.value = book.title
+		FormBooks.author.value = book.author.id
+		FormBooks.abstract.value = book.abstract
+		FormBooks.category.value = book.category
+		FormBooks.publisher.value = book.publisher
+		FormBooks.published.value = Utils.formatDateISO(book.published)
+		FormBooks.pages.value = book.pages
+		FormBooks.isbn.value = book.isbn
+	},
+
+	resetModalBook() {
+		const headTextBook = document.querySelector('h2#headTextBook')
+		headTextBook.innerHTML = "Novo livro"
+
+		FormBooks.clearFields()
+	},
 
 	editAuthor(index) {
 		const author = Author.get()[index]
@@ -932,6 +976,15 @@ const DOM = {
 				<td>${book.publisher}</td>
 				<td>${book.category}</td>
 				<td>${book.status}</td>
+				<td>
+					<i 
+						class="fa fa-pencil-square btn-edit" 
+						title="Clique para editar o registro"
+						onclick="DOM.editBook(${index})" 
+						aria-hidden="true"
+					>
+					</i>
+				</td>
 				<td>${remove}</td>
 			`
 		return html
@@ -1096,7 +1149,7 @@ const DOM = {
 	resetModal(modal) {
 		switch (modal) {
 			case DOM.modalOverlay.books:
-				DOM.resetModalBookLoan()
+				DOM.resetModalBook()
 				break
 			case DOM.modalOverlay.authors:
 				DOM.resetModalAuthor()
@@ -1104,6 +1157,9 @@ const DOM = {
 			case DOM.modalOverlay.friends:
 				DOM.resetModalFriend()
 				break
+			case DOM.modalOverlay.bookLoans:
+				DOM.resetModalBookLoan()
+				break				
 			default:
 		}
 	},
