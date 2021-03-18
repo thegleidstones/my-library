@@ -135,11 +135,12 @@
     <div class="modal-overlay" id="modal-overlay-authors">
         <div class="modal">
             <div class="forms" id="form-authors">
-                <h2 class="headTextForm">Novo Escritor</h2>
+                <h2 class="headTextForm" id="headTextAuthor">Novo Escritor</h2>
                 <form action="" onsubmit="FormAuthors.submit(event)">
                     <div>
                         <label class="sr-only" for="authorName">Nome</label>
                         <input type="text" name="authorName" id="authorName" placeholder="Nome" />
+                        <input type="hidden" name="authorId" id="authorId" value="new">
                     </div>
                     <div>
                         <label class="sr-only" for="biografy">Biografia</label>
