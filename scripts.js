@@ -124,7 +124,13 @@ const Wishlist = {
 	remove(index) {
 		this.wishlists.splice(index, 1)
 		DOM.callWishlistTable()
-	}
+	},
+	
+	update(wishlist) {
+		Wishlist.get()[wishlist.id] = wishlist
+		Storage.setWishlist(Wishlist.get())
+		DOM.callWishlistTable()
+	},
 }
 
 const Book = {
@@ -390,12 +396,14 @@ FormFriends = {
 }
 
 FormWishlist = {
+	wishlistId: document.querySelector('input#wishlistId'),
 	wishlistTitle: document.querySelector('input#wishlistTitle'),
 	wishlistAuthor: document.querySelector('input#wishlistAuthor'),
 	link: document.querySelector('input#link'),
 
 	getValues() {
 		return {
+			id: FormWishlist.wishlistId.value,
 			wishlistTitle: FormWishlist.wishlistTitle.value,
 			wishlistAuthor: FormWishlist.wishlistAuthor.value,
 			link: FormWishlist.link.value
@@ -413,6 +421,7 @@ FormWishlist = {
 	},
 
 	clearFields() {
+		FormWishlist.wishlistId.value = "new"
 		FormWishlist.wishlistTitle.value = ""
 		FormWishlist.wishlistAuthor.value = ""
 		FormWishlist.link.value = ""
@@ -422,9 +431,18 @@ FormWishlist = {
 		event.preventDefault()
 
 		try {
-			FormWishlist.validateFields()
-			Wishlist.add(FormWishlist.getValues())
-			FormWishlist.clearFields()
+			let wishlist = FormWishlist.getValues()
+
+			if (wishlist.id.trim() === "new") {
+				wishlist.id = Wishlist.get().length
+				FormWishlist.validateFields()
+				Wishlist.add(wishlist)
+				FormWishlist.clearFields()
+			} else {
+				FormWishlist.validateFields()
+				Wishlist.update(wishlist)
+				FormWishlist.clearFields()
+			}
 		} catch (error) {
 			alert(error)
 		}
@@ -592,6 +610,7 @@ const DOM = {
 				<th>Autor</th>
 				<th>Link</th>
 				<th></th>
+				<th></th>
 			`,
 		bookLoans:
 			`
@@ -632,6 +651,29 @@ const DOM = {
 		headTextAuthor.innerHTML = "Novo Escritor"
 
 		FormAuthors.clearFields()
+	},
+
+	editWishlist(index) {
+		const wishlist = Wishlist.get()[index]
+		
+		const headTextWishlist = document.querySelector('h2#headTextWishlist')
+
+		Modal.open(DOM.modalOverlay.wishlist)
+		
+		headTextWishlist.innerHTML = "Alteração de lista de desejos"
+
+		FormWishlist.wishlistId.value = wishlist.id
+		FormWishlist.wishlistTitle.value = wishlist.wishlistTitle
+		FormWishlist.wishlistAuthor.value = wishlist.wishlistAuthor
+		FormWishlist.link.value = wishlist.link
+	},
+
+	resetModalWishlist() {
+	const headTextWishlist = document.querySelector('h2#headTextWishlist')
+
+		headTextWishlist.innerHTML = "Novo item da lista de desejos"
+
+		FormWishlist.clearFields()
 	},
 
 	editFriend(index) {
@@ -960,6 +1002,15 @@ const DOM = {
 			<td>${wishlist.wishlistTitle}</td>
 			<td>${wishlist.wishlistAuthor}</td>
 			<td><a href="${wishlist.link}" target="_blank">Visualizar link</a></td>
+			<td>
+			<i 
+				class="fa fa-pencil-square btn-edit" 
+				title="Clique para editar o registro"
+				onclick="DOM.editWishlist(${index})" 
+				aria-hidden="true"
+			>
+			</i>
+		</td>
 			<td>
 				<i 
 					class="fa fa-minus-square btn-remove" 
