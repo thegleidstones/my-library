@@ -294,6 +294,12 @@ table tbody tr td .btn-remove {
     color: var(--btn-cancel);
 }
 
+table tbody tr td .btn-edit {
+    cursor: pointer;
+    font-size: 2rem;
+    color: var(--btn-list);
+}
+
 /* Modal ==========================================*/
 .modal-overlay {
     width: 100%;
