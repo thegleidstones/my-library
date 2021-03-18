@@ -161,11 +161,12 @@
     <div class="modal-overlay" id="modal-overlay-friends">
         <div class="modal">
             <div class="forms" id="form-friends">
-                <h2 class="headTextForm">Novo Amigo</h2>
+                <h2 class="headTextForm" id="headTextFriend">Novo Amigo</h2>
                 <form action="" onsubmit="FormFriends.submit(event)">
                     <div>
                         <label class="sr-only" for="name">Nome</label>
                         <input type="text" name="name" id="name" placeholder="Nome" />
+                        <input type="hidden" name="friendId" id="friendId" value="new">
                     </div>
                     <div>
                         <label class="sr-only" for="cellphone">Celular</label>
