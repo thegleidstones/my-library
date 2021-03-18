@@ -2,279 +2,280 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap" rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,400;0,500;0,700;1,100;1,400;1,500&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="./styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" />
-    <title>Document</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap"
+		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap" rel="stylesheet">
+	<link
+		href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,400;0,500;0,700;1,100;1,400;1,500&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="./styles.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+		integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+		crossorigin="anonymous" />
+	<title>Document</title>
 </head>
 
 <body class="light-theme">
-    <header>
-        <div class="logo">
-            <img src="./assets/digital-library.svg" alt="">
-            <h1>My Library</h1>
-        </div>
-        <div>
-            <button class="btn-toogle" onclick="DOM.toggleTheme(event)">Dark Theme</button>
-        </div>
-    </header>
+	<header>
+		<div class="logo">
+			<img src="./assets/digital-library.svg" alt="">
+			<h1>My Library</h1>
+		</div>
+		<div>
+			<button class="btn-toogle" onclick="DOM.toggleTheme(event)">Dark Theme</button>
+		</div>
+	</header>
 
-    <main class="container">
-        <section id="cards">
-            <a href="#" name="buttonBooks" onclick="Modal.open('modal-overlay-books')">
-                <div class="card" id="cardBook">
-                    <h2>+Livros</h2>
-                    <img src="./assets/book-01.svg" alt="">
-                </div>
-            </a>
+	<main class="container">
+		<section id="cards">
+			<a href="#" name="buttonBooks" onclick="Modal.open('modal-overlay-books')">
+				<div class="card" id="cardBook">
+					<h2>+Livros</h2>
+					<img src="./assets/book-01.svg" alt="">
+				</div>
+			</a>
 
-            <a href="#" onclick="Modal.open('modal-overlay-authors')">
-                <div class="card" id="cardAuthor">
-                    <h2>+Escritores</h2>
-                    <img src="./assets/author-01.svg" alt="Autores">
-                </div>
-            </a>
+			<a href="#" onclick="Modal.open('modal-overlay-authors')">
+				<div class="card" id="cardAuthor">
+					<h2>+Escritores</h2>
+					<img src="./assets/author-01.svg" alt="Autores">
+				</div>
+			</a>
 
-            <a href="#" onclick="Modal.open('modal-overlay-friends')">
-                <div class="card" id="cardFriend">
-                    <h2>+Amigos</h2>
-                    <img src="./assets/friend-01.svg" alt="Amigos">
-                </div>
-            </a>
+			<a href="#" onclick="Modal.open('modal-overlay-friends')">
+				<div class="card" id="cardFriend">
+					<h2>+Amigos</h2>
+					<img src="./assets/friend-01.svg" alt="Amigos">
+				</div>
+			</a>
 
-            <a href="#" onclick="Modal.open('modal-overlay-bookLoans')">
-                <div class="card" id="cardBookLoan">
-                    <h2>+Empréstimos</h2>
-                    <img src="./assets/book-loan.svg" alt="Empréstimos de livro">
-                </div>
-            </a>
+			<a href="#" onclick="Modal.open('modal-overlay-bookLoans')">
+				<div class="card" id="cardBookLoan">
+					<h2>+Empréstimos</h2>
+					<img src="./assets/book-loan.svg" alt="Empréstimos de livro">
+				</div>
+			</a>
 
-            <a href="#" onclick="Modal.open('modal-overlay-wishlist')">
-                <div class="card" id="cardWishlist">
-                    <h2>+Lista de Desejos</h2>
-                    <img src="./assets/wishlist-01.svg" alt="">
-                </div>
-            </a>
-        </section>
+			<a href="#" onclick="Modal.open('modal-overlay-wishlist')">
+				<div class="card" id="cardWishlist">
+					<h2>+Lista de Desejos</h2>
+					<img src="./assets/wishlist-01.svg" alt="">
+				</div>
+			</a>
+		</section>
 
-        <section id="books-authors">
-            <table id="data-table">
-                <thead>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </section>
-    </main>
+		<section id="books-authors">
+			<table id="data-table">
+				<thead>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</section>
+	</main>
 
-    <!-- Modal & form para cadastrar livros -->
-    <div class="modal-overlay" id="modal-overlay-books">
-        <div class="modal">
-            <div class="forms" id="form-books">
-                <h2 class="headTextForm">Novo Livro</h2>
-                <form action="" onsubmit="FormBooks.submit(event)">
-                    <div>
-                        <label class="sr-only" for="title">Título</label>
-                        <input type="text" name="title" id="title" placeholder="Título" />
-                    </div>
-                    <div>
-                        <label class="sr-only" for="author">Autor</label>
-                        <select name="author" id="author" placeholder="Autor/Autores">
-                        </select>
-                    </div>
-                    <div>
-                        <label class="sr-only" for="abstract">Resumo</label>
-                        <textarea name="abstract" id="abstract" placeholder="Resumo do Livro" cols="50"
-                            rows="6"></textarea>
-                    </div>
-                    <div class="category-publisher">
-                        <div class="category">
-                            <label class="sr-only" for="category">Categoria</label>
-                            <input type="text" name="category" id="category" placeholder="Categoria" />
-                        </div>
-                        <div class="publisher">
-                            <label class="sr-only" for="">Editora</label>
-                            <input type="text" name="publisher" id="publisher" placeholder="Editora" />
-                        </div>
-                    </div>
-                    <div class="published-pages-isbn">
-                        <div>
-                            <label class="sr-only" for="published">Publicação</label>
-                            <input type="date" name="published" id="published" />
-                            <small>data de publicação</small>
-                        </div>
-                        <div class="pages">
-                            <label class="sr-only" for="pages">Páginas</label>
-                            <input type="number" name="pages" id="pages" placeholder="Páginas" />
-                        </div>
-                        <div class="isbn">
-                            <label class="sr-only" for="isbn">ISBN</label>
-                            <input type="text" name="isbn" id="isbn" placeholder="ISBN" />
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <a href="#" onclick="Modal.close('modal-overlay-books')" class="button cancel">Cancelar</a>
-                        <a href="#" onclick=DOM.callBooksTable() class="button list">Lista</a>
-                        <button>Salvar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+	<!-- Modal & form para cadastrar livros -->
+	<div class="modal-overlay" id="modal-overlay-books">
+		<div class="modal">
+			<div class="forms" id="form-books">
+				<h2 class="headTextForm">Novo Livro</h2>
+				<form action="" onsubmit="FormBooks.submit(event)">
+					<div>
+						<label class="sr-only" for="title">Título</label>
+						<input type="text" name="title" id="title" placeholder="Título" />
+					</div>
+					<div>
+						<label class="sr-only" for="author">Autor</label>
+						<select name="author" id="author" placeholder="Autor/Autores">
+						</select>
+					</div>
+					<div>
+						<label class="sr-only" for="abstract">Resumo</label>
+						<textarea name="abstract" id="abstract" placeholder="Resumo do Livro" cols="50" rows="6"></textarea>
+					</div>
+					<div class="category-publisher">
+						<div class="category">
+							<label class="sr-only" for="category">Categoria</label>
+							<input type="text" name="category" id="category" placeholder="Categoria" />
+						</div>
+						<div class="publisher">
+							<label class="sr-only" for="">Editora</label>
+							<input type="text" name="publisher" id="publisher" placeholder="Editora" />
+						</div>
+					</div>
+					<div class="published-pages-isbn">
+						<div>
+							<label class="sr-only" for="published">Publicação</label>
+							<input type="date" name="published" id="published" />
+							<small>data de publicação</small>
+						</div>
+						<div class="pages">
+							<label class="sr-only" for="pages">Páginas</label>
+							<input type="number" name="pages" id="pages" placeholder="Páginas" />
+						</div>
+						<div class="isbn">
+							<label class="sr-only" for="isbn">ISBN</label>
+							<input type="text" name="isbn" id="isbn" placeholder="ISBN" />
+						</div>
+					</div>
+					<div class="input-group">
+						<a href="#" onclick="Modal.close('modal-overlay-books')" class="button cancel">Cancelar</a>
+						<a href="#" onclick=DOM.callBooksTable() class="button list">Lista</a>
+						<button>Salvar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
-    <!-- Modal & form para cadastrar autores -->
-    <div class="modal-overlay" id="modal-overlay-authors">
-        <div class="modal">
-            <div class="forms" id="form-authors">
-                <h2 class="headTextForm" id="headTextAuthor">Novo Escritor</h2>
-                <form action="" onsubmit="FormAuthors.submit(event)">
-                    <div>
-                        <label class="sr-only" for="authorName">Nome</label>
-                        <input type="text" name="authorName" id="authorName" placeholder="Nome" />
-                        <input type="hidden" name="authorId" id="authorId" value="new">
-                    </div>
-                    <div>
-                        <label class="sr-only" for="biografy">Biografia</label>
-                        <textarea name="biografy" id="biografy" placeholder="Biografia resumida do escritor" cols="50"
-                            rows="6"></textarea>
-                    </div>
-                    <div class="input-group">
-                        <a href="#" onclick="Modal.close('modal-overlay-authors')" class="button cancel">Cancelar</a>
-                        <a href="#" onclick=DOM.callAuthorsTable() class="button list">Lista</a>
-                        <button>Salvar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+	<!-- Modal & form para cadastrar autores -->
+	<div class="modal-overlay" id="modal-overlay-authors">
+		<div class="modal">
+			<div class="forms" id="form-authors">
+				<h2 class="headTextForm" id="headTextAuthor">Novo Escritor</h2>
+				<form action="" onsubmit="FormAuthors.submit(event)">
+					<div>
+						<label class="sr-only" for="authorName">Nome</label>
+						<input type="text" name="authorName" id="authorName" placeholder="Nome" />
+						<input type="hidden" name="authorId" id="authorId" value="new">
+					</div>
+					<div>
+						<label class="sr-only" for="biografy">Biografia</label>
+						<textarea name="biografy" id="biografy" placeholder="Biografia resumida do escritor" cols="50"
+							rows="6"></textarea>
+					</div>
+					<div class="input-group">
+						<a href="#" onclick="Modal.close('modal-overlay-authors')" class="button cancel">Cancelar</a>
+						<a href="#" onclick=DOM.callAuthorsTable() class="button list">Lista</a>
+						<button>Salvar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
-    <!-- Modal & form para cadastrar amigos -->
-    <div class="modal-overlay" id="modal-overlay-friends">
-        <div class="modal">
-            <div class="forms" id="form-friends">
-                <h2 class="headTextForm" id="headTextFriend">Novo Amigo</h2>
-                <form action="" onsubmit="FormFriends.submit(event)">
-                    <div>
-                        <label class="sr-only" for="name">Nome</label>
-                        <input type="text" name="name" id="name" placeholder="Nome" />
-                        <input type="hidden" name="friendId" id="friendId" value="new">
-                    </div>
-                    <div>
-                        <label class="sr-only" for="cellphone">Celular</label>
-                        <input type="text" name="cellphone" id="cellphone" placeholder="Celular" />
-                    </div>
-                    <div>
-                        <label class="sr-only" for="email">Email</label>
-                        <input type="email" name="email" id="email" placeholder="email@email.com" />
-                    </div>
-                    <div>
-                        <label class="sr-only" for="instagram">Instagram</label>
-                        <input type="text" name="instagram" id="instagram" placeholder="instagram" />
-                    </div>
-                    <div>
-                        <label class="sr-only" for="address">Endereço</label>
-                        <input type="text" name="address" id="address" placeholder="Endereço" />
-                    </div>
-                    <div class="input-group">
-                        <a href="#" onclick="Modal.close('modal-overlay-friends')" class="button cancel">Cancelar</a>
-                        <a href="#" onclick=DOM.callFriendsTable() class="button list">Lista</a>
-                        <button>Salvar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+	<!-- Modal & form para cadastrar amigos -->
+	<div class="modal-overlay" id="modal-overlay-friends">
+		<div class="modal">
+			<div class="forms" id="form-friends">
+				<h2 class="headTextForm" id="headTextFriend">Novo Amigo</h2>
+				<form action="" onsubmit="FormFriends.submit(event)">
+					<div>
+						<label class="sr-only" for="name">Nome</label>
+						<input type="text" name="name" id="name" placeholder="Nome" />
+						<input type="hidden" name="friendId" id="friendId" value="new">
+					</div>
+					<div>
+						<label class="sr-only" for="cellphone">Celular</label>
+						<input type="text" name="cellphone" id="cellphone" placeholder="Celular" />
+					</div>
+					<div>
+						<label class="sr-only" for="email">Email</label>
+						<input type="email" name="email" id="email" placeholder="email@email.com" />
+					</div>
+					<div>
+						<label class="sr-only" for="instagram">Instagram</label>
+						<input type="text" name="instagram" id="instagram" placeholder="instagram" />
+					</div>
+					<div>
+						<label class="sr-only" for="address">Endereço</label>
+						<input type="text" name="address" id="address" placeholder="Endereço" />
+					</div>
+					<div class="input-group">
+						<a href="#" onclick="Modal.close('modal-overlay-friends')" class="button cancel">Cancelar</a>
+						<a href="#" onclick=DOM.callFriendsTable() class="button list">Lista</a>
+						<button>Salvar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
-    <!-- Modal & form para cadastrar os livros da lista de desejos -->
-    <div class="modal-overlay" id="modal-overlay-wishlist">
-        <div class="modal">
-            <div class="forms" id="form-wishlist">
-                <h2 class="headTextForm">Novo item da lista de desejos</h2>
-                <form action="" onsubmit="FormWishlist.submit(event)">
-                    <div>
-                        <label class="sr-only" for="wishlistTitle">Título</label>
-                        <input type="text" name="wishlistTitle" id="wishlistTitle" placeholder="Título" />
-                    </div>
-                    <div>
-                        <label class="sr-only" for="wishlistAuthor">Autor</label>
-                        <input type="text" name="wishlistAuthor" id="wishlistAuthor" placeholder="Autor/Autores" />
-                    </div>
-                    <div>
-                        <label class="sr-only" for="link">Link do livro</label>
-                        <input type="text" name="link" id="link"
-                            placeholder="link do livro desejado" />
-                    </div>
-                    <div class="input-group">
-                        <a href="#" onclick="Modal.close('modal-overlay-wishlist')" class="button cancel">Cancelar</a>
-                        <a href="#" onclick=DOM.callWishlistTable() class="button list">Lista</a>
-                        <button>Salvar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+	<!-- Modal & form para cadastrar os livros da lista de desejos -->
+	<div class="modal-overlay" id="modal-overlay-wishlist">
+		<div class="modal">
+			<div class="forms" id="form-wishlist">
+				<h2 class="headTextForm" id="headTextWishlist">Novo item da lista de desejos</h2>
+				<form action="" onsubmit="FormWishlist.submit(event)">
+					<div>
+						<label class="sr-only" for="wishlistTitle">Título</label>
+						<input type="text" name="wishlistTitle" id="wishlistTitle" placeholder="Título" />
+						<input type="hidden" name="wishlistId" id="wishlistId" value="new">
+					</div>
+					<div>
+						<label class="sr-only" for="wishlistAuthor">Autor</label>
+						<input type="text" name="wishlistAuthor" id="wishlistAuthor" placeholder="Autor/Autores" />
+					</div>
+					<div>
+						<label class="sr-only" for="link">Link do livro</label>
+						<input type="text" name="link" id="link" placeholder="link do livro desejado" />
+					</div>
+					<div class="input-group">
+						<a href="#" onclick="Modal.close('modal-overlay-wishlist')" class="button cancel">Cancelar</a>
+						<a href="#" onclick=DOM.callWishlistTable() class="button list">Lista</a>
+						<button>Salvar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
-    <!-- Modal & form para realizar empréstimos de livros a amigos -->
-    <div class="modal-overlay" id="modal-overlay-bookLoans">
-        <div class="modal">
-            <div class="forms" id="form-bookLoan">
-                <h2 class="headTextForm" id="headTextBookLoan">Novo Empréstimo</h2>
-                <form action="" onsubmit="FormBookLoans.submit(event)">
-                    <div>
-                        <label class="sr-only" for="bookLoan">Livro</label>
-                        <select name="bookLoanTitle" id="bookLoanBook">
-                        </select>
-                    </div>
-                    <div>
-                        <label class="sr-only" for="">Amigo</label>
-                        <select name="bookLoanFriend" id="bookLoanFriend">
-                        </select>
-                    </div>
-                    <div class="dates">
-                        <div class="bookLoanDate">
-                            <label class="sr-only" for="bookLoanDate">Data empréstimo</label>
-                            <input type="date" name="bookLoanDate" id="bookLoanDate">
-                            <small>data do empréstimo</small>
-                        </div>
-                        <div class="bookLoanDevolutionDate">
-                            <label class="sr-only" for="bookLoanDevolutionDate">Data devolução</label>
-                            <input type="date" disabled name="bookLoanDevolutionDate" id="bookLoanDevolutionDate">
-                            <input type="hidden" name="bookLoanId" id="bookLoanId" value="">
-                            <input type="hidden" name="loanOrReturn" id="loanOrReturn" value="loan">
-                            <small>data da devolução</small>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <a href="#" onclick="Modal.close('modal-overlay-bookLoans')" class="button cancel">Cancelar</a>
-                        <a href="#" onclick="DOM.callBookLoansTable()" class="button list">Lista</a>
-                        <button>Salvar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+	<!-- Modal & form para realizar empréstimos de livros a amigos -->
+	<div class="modal-overlay" id="modal-overlay-bookLoans">
+		<div class="modal">
+			<div class="forms" id="form-bookLoan">
+				<h2 class="headTextForm" id="headTextBookLoan">Novo Empréstimo</h2>
+				<form action="" onsubmit="FormBookLoans.submit(event)">
+					<div>
+						<label class="sr-only" for="bookLoan">Livro</label>
+						<select name="bookLoanTitle" id="bookLoanBook">
+						</select>
+					</div>
+					<div>
+						<label class="sr-only" for="">Amigo</label>
+						<select name="bookLoanFriend" id="bookLoanFriend">
+						</select>
+					</div>
+					<div class="dates">
+						<div class="bookLoanDate">
+							<label class="sr-only" for="bookLoanDate">Data empréstimo</label>
+							<input type="date" name="bookLoanDate" id="bookLoanDate">
+							<small>data do empréstimo</small>
+						</div>
+						<div class="bookLoanDevolutionDate">
+							<label class="sr-only" for="bookLoanDevolutionDate">Data devolução</label>
+							<input type="date" disabled name="bookLoanDevolutionDate" id="bookLoanDevolutionDate">
+							<input type="hidden" name="bookLoanId" id="bookLoanId" value="">
+							<input type="hidden" name="loanOrReturn" id="loanOrReturn" value="loan">
+							<small>data da devolução</small>
+						</div>
+					</div>
+					<div class="input-group">
+						<a href="#" onclick="Modal.close('modal-overlay-bookLoans')" class="button cancel">Cancelar</a>
+						<a href="#" onclick="DOM.callBookLoansTable()" class="button list">Lista</a>
+						<button>Salvar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
-    <footer>
-        <div>
-            Icons by <a href="https://freeicons.io/profile/730" target="_blank">Anu Rocks</a>
-            and <a href="https://freeicons.io/profile/5596" target="_blank">shivani</a> on <a
-                href="https://freeicons.io" target="_blank">freeicons.io</a>
-            <p><a href="https://iconscout.com/icons/digital-library" target="_blank">Digital Library Icon</a> by <a
-                    href="https://iconscout.com/contributors/pro-symbols" target="_blank">Pro Symbols</a> on <a
-                    href="https://iconscout.com" target="_blank">Iconscout</a></p>
-        </div>
-    </footer>
+	<footer>
+		<div>
+			Icons by <a href="https://freeicons.io/profile/730" target="_blank">Anu Rocks</a>
+			and <a href="https://freeicons.io/profile/5596" target="_blank">shivani</a> on <a href="https://freeicons.io"
+				target="_blank">freeicons.io</a>
+			<p><a href="https://iconscout.com/icons/digital-library" target="_blank">Digital Library Icon</a> by <a
+					href="https://iconscout.com/contributors/pro-symbols" target="_blank">Pro Symbols</a> on <a
+					href="https://iconscout.com" target="_blank">Iconscout</a></p>
+		</div>
+	</footer>
 
-    <script src="./scripts.js"></script>
+	<script src="./scripts.js"></script>
 </body>
 
 </html>
