@@ -447,6 +447,21 @@ table tbody tr td .btn-edit {
 	width: 100%;
 }
 
+/* Form Authors ==========================================*/
+#modal-overlay-categories {
+	opacity: 0;
+	visibility: hidden;
+}
+
+#modal-overlay-categories.active {
+	opacity: 1;
+	visibility: visible;
+}
+
+#form-categories {
+	min-width: 300px;
+}
+
 /* Form Friends ==========================================*/
 #modal-overlay-friends {
 	opacity: 0;

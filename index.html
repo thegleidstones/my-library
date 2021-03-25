@@ -140,6 +140,27 @@
 		</div>
 	</div>
 
+	<!-- Modal & form para cadastrar categorias -->
+	<div class="modal-overlay" id="modal-overlay-categories">
+		<div class="modal">
+			<div class="forms" id="form-categories">
+				<h2 class="headTextForm" id="headTextCategory">Nova Categoria</h2>
+				<form action="" onsubmit="FormCategories.submit(event)">
+					<div>
+						<label class="sr-only" for="categoryName">Descrição</label>
+						<input type="text" name="categoryName" id="categoryName" placeholder="Descrição" />
+						<input type="hidden" name="categoryId" id="categoryId" value="new">
+					</div>
+					<div class="input-group">
+						<a href="#" onclick="Modal.close('modal-overlay-categories')" class="button cancel">Cancelar</a>
+						<a href="#" onclick=DOM.callCategoriesTable() class="button list">Lista</a>
+						<button>Salvar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
 	<!-- Modal & form para cadastrar autores -->
 	<div class="modal-overlay" id="modal-overlay-authors">
 		<div class="modal">
