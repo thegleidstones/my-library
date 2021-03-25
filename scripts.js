@@ -108,7 +108,14 @@ const Category = {
 	remove(index) {
 		this.categories.splice(index, 1)
 		DOM.callCategoriesTable()
+	},
+
+	update(category) {
+		Category.get()[category.id] = category
+		Storage.setCategories(Category.get())
+		DOM.callCategoriesTable()
 	}
+
 }
 
 const Author = {
@@ -360,6 +367,10 @@ FormCategories = {
 				category.id = Category.get().length
 				FormCategories.validateFields()
 				Category.add(category)
+				FormCategories.clearFields()
+			} else {
+				FormCategories.validateFields()
+				Category.update(category)
 				FormCategories.clearFields()
 			}
 		} catch (error) {
@@ -751,6 +762,26 @@ const DOM = {
 		headTextBook.innerHTML = "Novo livro"
 
 		FormBooks.clearFields()
+	},
+
+	editCategory(index) {
+		const category = Category.get()[index]
+		const headTextCategory = document.querySelector('h2#headTextCategory')
+
+		Modal.open(DOM.modalOverlay.categories)
+
+		headTextCategory.innerHTML = "Alteração de Categoria"
+
+		FormCategories.categoryId.value = category.id
+		FormCategories.categoryName.value = category.name
+	},
+
+	resetModalCategory() {
+		const headTextCategory = document.querySelector('h2#headTextCategory')
+
+		headTextCategory.innerHTML = "Nova Categoria"
+
+		FormCategories.clearFields()
 	},
 
 	editAuthor(index) {
@@ -1267,6 +1298,9 @@ const DOM = {
 			case DOM.modalOverlay.books:
 				DOM.resetModalBook()
 				break
+			case DOM.modalOverlay.categories:
+				DOM.resetModalCategory()
+				break
 			case DOM.modalOverlay.authors:
 				DOM.resetModalAuthor()
 				break
@@ -1275,7 +1309,7 @@ const DOM = {
 				break
 			case DOM.modalOverlay.bookLoans:
 				DOM.resetModalBookLoan()
-				break				
+				break
 			default:
 		}
 	},
