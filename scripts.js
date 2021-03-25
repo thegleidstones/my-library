@@ -103,6 +103,11 @@ const Category = {
 
 	get() {
 		return this.categories
+	},
+
+	remove(index) {
+		this.categories.splice(index, 1)
+		DOM.callCategoriesTable()
 	}
 }
 
