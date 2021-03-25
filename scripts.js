@@ -576,6 +576,7 @@ FormBookLoans = {
 const DOM = {
 	modalOverlay: {
 		books: 'modal-overlay-books',
+		categories: 'modal-overlay-categories',
 		authors: 'modal-overlay-authors',
 		friends: 'modal-overlay-friends',
 		wishlist: 'modal-overlay-wishlist',
