@@ -244,7 +244,7 @@ FormBooks = {
 	title: document.querySelector('input#title'),
 	author: document.querySelector('select#author'),
 	abstract: document.querySelector('textarea#abstract'),
-	category: document.querySelector('input#category'),
+	category: document.querySelector('select#category'),
 	publisher: document.querySelector('input#publisher'),
 	published: document.querySelector('input#published'),
 	pages: document.querySelector('input#pages'),
@@ -256,7 +256,7 @@ FormBooks = {
 			title: FormBooks.title.value,
 			authorId: FormBooks.author.value,
 			abstract: FormBooks.abstract.value,
-			category: FormBooks.category.value,
+			categoryId: FormBooks.category.value,
 			publisher: FormBooks.publisher.value,
 			published: FormBooks.published.value,
 			pages: FormBooks.pages.value,
@@ -265,8 +265,9 @@ FormBooks = {
 	},
 
 	createObjectBook() {
-		let {id, title, authorId, abstract, category, publisher, published, pages, isbn } = FormBooks.getValues()
+		let {id, title, authorId, abstract, categoryId, publisher, published, pages, isbn } = FormBooks.getValues()
 		const author = Author.get()[authorId]
+		const category = Category.get()[categoryId]
 		const status = "Disponível"
 		published = Utils.formatDate(published)
 
@@ -285,12 +286,12 @@ FormBooks = {
 	},
 
 	validateFields() {
-		const { title, authorId, abstract, category, publisher, published, pages, isbn } = FormBooks.getValues()
+		const { title, authorId, abstract, categoryId, publisher, published, pages, isbn } = FormBooks.getValues()
 
 		if (title.trim() === "" ||
 			authorId.trim() === "" ||
 			abstract.trim() === "" ||
-			category.trim() === "" ||
+			categoryId.trim() === "" ||
 			publisher.trim() === "" ||
 			published.trim() === "" ||
 			pages.trim() === "" ||
@@ -735,6 +736,7 @@ const DOM = {
 	tableBodyContainer: document.querySelector('#data-table tbody'),
 	tableHeadContainer: document.querySelector('#data-table thead'),
 	selectBookAuthor: document.querySelector('select#author'),
+	selectBookCategory: document.querySelector('select#category'),
 	selectBookLoanBook: document.querySelector('select#bookLoanBook'),
 	selectBookLoanFriend: document.querySelector('select#bookLoanFriend'),
 
@@ -750,7 +752,7 @@ const DOM = {
 		FormBooks.title.value = book.title
 		FormBooks.author.value = book.author.id
 		FormBooks.abstract.value = book.abstract
-		FormBooks.category.value = book.category
+		FormBooks.category.value = book.category.id
 		FormBooks.publisher.value = book.publisher
 		FormBooks.published.value = Utils.formatDateISO(book.published)
 		FormBooks.pages.value = book.pages
@@ -1045,6 +1047,21 @@ const DOM = {
 		DOM.selectBookAuthor.appendChild(option)
 	},
 
+	createBookCategorySelect(category, index) {
+		const option = document.createElement('option')
+
+		if (index === 0) {
+			const option = document.createElement('option')
+			option.value = ""
+			option.innerHTML = "= Selecione uma categoria ="
+			DOM.selectBookCategory.appendChild(option)
+		}
+
+		option.value = index
+		option.innerHTML = category.name
+		DOM.selectBookCategory.appendChild(option)
+	},
+
 	createBookLoanBookSelect(book, index) {
 		const option = document.createElement('option')
 
@@ -1095,7 +1112,7 @@ const DOM = {
 				<td>${book.title}</td>
 				<td>${book.author.authorName}</td>
 				<td>${book.publisher}</td>
-				<td>${book.category}</td>
+				<td>${book.category.name}</td>
 				<td>${book.status}</td>
 				<td>
 					<i 
@@ -1291,6 +1308,7 @@ const DOM = {
 		DOM.selectBookLoanBook.innerHTML = ""
 		DOM.selectBookLoanFriend.innerHTML = ""
 		DOM.selectBookAuthor.innerHTML = ""
+		DOM.selectBookCategory.innerHTML = ""
 	},
 
 	resetModal(modal) {
@@ -1335,6 +1353,7 @@ const DOM = {
 	callBookSelects() {
 		DOM.clearSelect()
 		Author.get().forEach(DOM.createBookAuthorSelect)
+		Category.get().forEach(DOM.createBookCategorySelect)
 	},
 
 	callBooksTable() {
