@@ -19,6 +19,14 @@ Storage = {
 		localStorage.setItem("my-library:books", JSON.stringify(books))
 	},
 
+	getCategories() {
+		return JSON.parse(localStorage.getItem("my-library:categories")) || []
+	},
+
+	setCategories(categories) {
+		localStorage.setItem("my-library:categories", JSON.stringify(categories))
+	},
+
 	getAuthors() {
 		return JSON.parse(localStorage.getItem("my-library:authors")) || []
 
@@ -82,6 +90,19 @@ const Friend = {
 		Friend.get()[friend.id] = friend
 		Storage.setFriends(Friend.get())
 		DOM.callFriendsTable()
+	}
+}
+
+const Category = {
+	categories: Storage.getCategories(),
+
+	add(category) {
+		this.categories.push(category)
+		DOM.callCategoriesTable()
+	},
+
+	get() {
+		return this.categories
 	}
 }
 
@@ -298,6 +319,49 @@ FormBooks = {
 			alert(error)
 		}
 	}
+}
+
+FormCategories = {
+	categoryId: document.querySelector('input#categoryId'),
+	categoryName: document.querySelector('input#categoryName'),
+
+	getValues() {
+		return {
+			id: FormCategories.categoryId.value,
+			name: FormCategories.categoryName.value
+		}
+	},
+
+	validateFields() {
+		const { name } = FormCategories.getValues()
+
+		if (name.trim() === "") {
+			throw new Error("Por favor, preencha os campos.")
+		}
+	},
+
+	clearFields() {
+		FormCategories.categoryId.value = "new"
+		FormCategories.categoryName.value = ""
+	},
+
+	submit(event) {
+		event.preventDefault()
+
+		let category = FormCategories.getValues()
+
+		try {
+			if (category.id.trim() === "new") {
+				category.id = Category.get().length
+				FormCategories.validateFields()
+				Category.add(category)
+				FormCategories.clearFields()
+			}
+		} catch (error) {
+			alert(error)
+		}
+	}
+
 }
 
 FormAuthors = {
@@ -1194,6 +1258,11 @@ const DOM = {
 		Storage.setBooks(Book.get())
 		Modal.close(DOM.modalOverlay.books)
 		DOM.toggleActiveCard(DOM.cards.book);
+	},
+
+	callCategoriesTable() {
+		//DOM.clearTable()
+		Storage.setCategories(Category.get())
 	},
 
 	callAuthorsTable() {
