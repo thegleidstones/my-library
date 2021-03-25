@@ -27,6 +27,14 @@ Storage = {
 		localStorage.setItem("my-library:categories", JSON.stringify(categories))
 	},
 
+	getPublishers() {
+		return JSON.parse(localStorage.getItem("my-library:publishers")) || []
+	},
+
+	setPublishers(publishers) {
+		localStorage.setItem("my-library:publishers", JSON.stringify(publishers))
+	},
+
 	getAuthors() {
 		return JSON.parse(localStorage.getItem("my-library:authors")) || []
 
@@ -115,7 +123,27 @@ const Category = {
 		Storage.setCategories(Category.get())
 		DOM.callCategoriesTable()
 	}
+}
 
+const Publisher = {
+	publishers: Storage.getPublishers(),
+
+	add(publisher) {
+		this.publishers.push(publisher)
+		DOM.callPublishersTable()
+	},
+
+	get() {
+		return this.publishers
+	},
+
+	remove(index) {
+
+	},
+
+	update(publisher) {
+
+	}
 }
 
 const Author = {
@@ -381,6 +409,50 @@ FormCategories = {
 
 }
 
+FormPublishers = {
+	publisherId: document.querySelector('input#publisherId'),
+	publisherName: document.querySelector('input#publisherName'),
+
+	getValues() {
+		return {
+			id: FormPublishers.publisherId.value,
+			name: FormPublishers.publisherName.value
+		}
+	},
+
+	validateFields() {
+		const { name } = FormPublishers.getValues()
+
+		if (name.trim() === "") {
+			throw new Error("Por favor, preencha os campos.")
+		}
+	},
+
+	clearFields() {
+		FormPublishers.publisherId.value = "new"
+		FormPublishers.publisherName.value = ""
+	},
+
+	submit(event) {
+		event.preventDefault()
+
+		let publisher = FormPublishers.getValues()
+
+		try {
+			if (publisher.id.trim() === "new") {
+				publisher.id = Publisher.get().length
+				FormPublishers.validateFields()
+				Publisher.add(publisher)
+				FormPublishers.clearFields()
+			} else {
+
+			}
+		} catch (error) {
+			alert(error)
+		}
+	}
+}
+
 FormAuthors = {
 	authorId: document.querySelector('input#authorId'),
 	authorName: document.querySelector('input#authorName'),
@@ -410,7 +482,6 @@ FormAuthors = {
 
 	submit(event) {
 		event.preventDefault()
-
 		
 		try {
 			let author = FormAuthors.getValues()
@@ -668,6 +739,7 @@ const DOM = {
 	cards: {
 		book: 'cardBook',
 		category: 'cardCategory',
+		publisher: 'cardPublisher',
 		author: 'cardAuthor',
 		friend: 'cardFriend',
 		wishlist: 'cardWishlist',
@@ -1371,6 +1443,14 @@ const DOM = {
 		Storage.setCategories(Category.get())
 		Modal.close(DOM.modalOverlay.categories)
 		DOM.toggleActiveCard(DOM.cards.category)
+	},
+
+	callPublishersTable() {
+		DOM.clearTable()
+		//Publisher.get().forEach(DOM.createPublisherTable)
+		Storage.setPublishers(Publisher.get())
+		Modal.close(DOM.modalOverlay.publishers)
+		DOM.toggleActiveCard(DOM.cards.publisher)
 	},
 
 	callAuthorsTable() {
