@@ -649,6 +649,7 @@ const DOM = {
 
 	cards: {
 		book: 'cardBook',
+		category: 'cardCategory',
 		author: 'cardAuthor',
 		friend: 'cardFriend',
 		wishlist: 'cardWishlist',
@@ -667,6 +668,13 @@ const DOM = {
 				<th></th>
 				<th></th>
 			`,
+		categories:
+		`
+			<th></th>
+			<th>Descrição</th>
+			<th></th>
+			<th></th>
+		`,			
 		authors:
 			`
 				<th></th>
@@ -925,6 +933,18 @@ const DOM = {
 		DOM.tableBodyContainer.appendChild(trBody)
 	},
 
+	createCategoryTable(category, index) {
+		if (index === 0) {
+			const trHead = document.createElement('tr')
+			trHead.innerHTML = DOM.tableHeads.categories
+			DOM.tableHeadContainer.appendChild(trHead)
+		}
+
+		const trBody = document.createElement('tr')
+		trBody.innerHTML = DOM.createCategoryTableData(category, index)
+		DOM.tableBodyContainer.appendChild(trBody)
+	},
+
 	createAuthorTable(author, index) {
 		if (index === 0) {
 			const trHead = document.createElement('tr')
@@ -1052,6 +1072,32 @@ const DOM = {
 				</td>
 				<td>${remove}</td>
 			`
+		return html
+	},
+
+	createCategoryTableData(category, index) {
+		const html = `
+			<td>${index + 1}</td>
+			<td>${category.name}</td>
+			<td>
+				<i 
+					class="fa fa-pencil-square btn-edit" 
+					title="Clique para editar o registro"
+					onclick="DOM.editCategory(${index})" 
+					aria-hidden="true"
+				>
+				</i>
+			</td>
+			<td>
+				<i 
+					class="fa fa-minus-square btn-remove" 
+					title="Clique para excluir o registro" 
+					onclick="Category.remove(${index})" 
+					aria-hidden="true"
+				>
+				</i>
+			</td>
+		`
 		return html
 	},
 
@@ -1261,8 +1307,11 @@ const DOM = {
 	},
 
 	callCategoriesTable() {
-		//DOM.clearTable()
+		DOM.clearTable()
+		Category.get().forEach(DOM.createCategoryTable)
 		Storage.setCategories(Category.get())
+		Modal.close(DOM.modalOverlay.categories)
+		DOM.toggleActiveCard(DOM.cards.category)
 	},
 
 	callAuthorsTable() {
