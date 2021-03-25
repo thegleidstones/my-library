@@ -658,6 +658,7 @@ const DOM = {
 	modalOverlay: {
 		books: 'modal-overlay-books',
 		categories: 'modal-overlay-categories',
+		publishers: 'modal-overlay-publishers',
 		authors: 'modal-overlay-authors',
 		friends: 'modal-overlay-friends',
 		wishlist: 'modal-overlay-wishlist',

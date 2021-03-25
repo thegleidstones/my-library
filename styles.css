@@ -447,7 +447,7 @@ table tbody tr td .btn-edit {
 	width: 100%;
 }
 
-/* Form Authors ==========================================*/
+/* Form Categories ==========================================*/
 #modal-overlay-categories {
 	opacity: 0;
 	visibility: hidden;
@@ -459,6 +459,21 @@ table tbody tr td .btn-edit {
 }
 
 #form-categories {
+	min-width: 300px;
+}
+
+/* Form Publihsers ==========================================*/
+#modal-overlay-publishers {
+	opacity: 0;
+	visibility: hidden;
+}
+
+#modal-overlay-publishers.active {
+	opacity: 1;
+	visibility: visible;
+}
+
+#form-publishers {
 	min-width: 300px;
 }
 

@@ -46,6 +46,13 @@
 				</div>
 			</a>
 
+			<a href="#" onclick="Modal.open('modal-overlay-publishers')">
+				<div class="card" id="cardPublihser">
+					<h2>+Editoras</h2>
+					<img src="./assets/publisher.svg" alt="Editora">
+				</div>
+			</a>
+
 			<a href="#" onclick="Modal.open('modal-overlay-authors')">
 				<div class="card" id="cardAuthor">
 					<h2>+Escritores</h2>
@@ -155,6 +162,27 @@
 					<div class="input-group">
 						<a href="#" onclick="Modal.close('modal-overlay-categories')" class="button cancel">Cancelar</a>
 						<a href="#" onclick=DOM.callCategoriesTable() class="button list">Lista</a>
+						<button>Salvar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal & form para cadastrar editoras -->
+	<div class="modal-overlay" id="modal-overlay-publishers">
+		<div class="modal">
+			<div class="forms" id="form-publishers">
+				<h2 class="headTextForm" id="headTextPublisher">Nova Editora</h2>
+				<form action="" onsubmit="FormPublishers.submit(event)">
+					<div>
+						<label class="sr-only" for="publihserName">Descrição</label>
+						<input type="text" name="publisherName" id="publisherName" placeholder="Nome Editora" />
+						<input type="hidden" name="publisherId" id="publisherId" value="new">
+					</div>
+					<div class="input-group">
+						<a href="#" onclick="Modal.close('modal-overlay-publishers')" class="button cancel">Cancelar</a>
+						<a href="#" onclick=DOM.callPublishersTable() class="button list">Lista</a>
 						<button>Salvar</button>
 					</div>
 				</form>
