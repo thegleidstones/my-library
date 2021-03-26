@@ -276,7 +276,7 @@ FormBooks = {
 	author: document.querySelector('select#author'),
 	abstract: document.querySelector('textarea#abstract'),
 	category: document.querySelector('select#category'),
-	publisher: document.querySelector('input#publisher'),
+	publisher: document.querySelector('select#publisher'),
 	published: document.querySelector('input#published'),
 	pages: document.querySelector('input#pages'),
 	isbn: document.querySelector('input#isbn'),
@@ -288,7 +288,7 @@ FormBooks = {
 			authorId: FormBooks.author.value,
 			abstract: FormBooks.abstract.value,
 			categoryId: FormBooks.category.value,
-			publisher: FormBooks.publisher.value,
+			publisherId: FormBooks.publisher.value,
 			published: FormBooks.published.value,
 			pages: FormBooks.pages.value,
 			isbn: FormBooks.isbn.value
@@ -296,9 +296,10 @@ FormBooks = {
 	},
 
 	createObjectBook() {
-		let {id, title, authorId, abstract, categoryId, publisher, published, pages, isbn } = FormBooks.getValues()
+		let {id, title, authorId, abstract, categoryId, publisherId, published, pages, isbn } = FormBooks.getValues()
 		const author = Author.get()[authorId]
 		const category = Category.get()[categoryId]
+		const publisher = Publisher.get()[publisherId]
 		const status = "Disponível"
 		published = Utils.formatDate(published)
 
@@ -317,13 +318,13 @@ FormBooks = {
 	},
 
 	validateFields() {
-		const { title, authorId, abstract, categoryId, publisher, published, pages, isbn } = FormBooks.getValues()
+		const { title, authorId, abstract, categoryId, publisherId, published, pages, isbn } = FormBooks.getValues()
 
 		if (title.trim() === "" ||
 			authorId.trim() === "" ||
 			abstract.trim() === "" ||
 			categoryId.trim() === "" ||
-			publisher.trim() === "" ||
+			publisherId.trim() === "" ||
 			published.trim() === "" ||
 			pages.trim() === "" ||
 			isbn.trim() === "") {
@@ -828,6 +829,7 @@ const DOM = {
 	tableHeadContainer: document.querySelector('#data-table thead'),
 	selectBookAuthor: document.querySelector('select#author'),
 	selectBookCategory: document.querySelector('select#category'),
+	selectBookPublisher: document.querySelector('select#publisher'),
 	selectBookLoanBook: document.querySelector('select#bookLoanBook'),
 	selectBookLoanFriend: document.querySelector('select#bookLoanFriend'),
 
@@ -844,7 +846,7 @@ const DOM = {
 		FormBooks.author.value = book.author.id
 		FormBooks.abstract.value = book.abstract
 		FormBooks.category.value = book.category.id
-		FormBooks.publisher.value = book.publisher
+		FormBooks.publisher.value = book.publisher.id
 		FormBooks.published.value = Utils.formatDateISO(book.published)
 		FormBooks.pages.value = book.pages
 		FormBooks.isbn.value = book.isbn
@@ -1186,6 +1188,21 @@ const DOM = {
 		DOM.selectBookCategory.appendChild(option)
 	},
 
+	createBookPublisherSelect(publisher, index) {
+		const option = document.createElement('option')
+
+		if (index === 0) {
+			const option = document.createElement('option')
+			option.value = ""
+			option.innerHTML = "= Selecione uma editora ="
+			DOM.selectBookPublisher.appendChild(option)
+		}
+
+		option.value = index
+		option.innerHTML = publisher.name
+		DOM.selectBookPublisher.appendChild(option)
+	},
+
 	createBookLoanBookSelect(book, index) {
 		const option = document.createElement('option')
 
@@ -1235,7 +1252,7 @@ const DOM = {
 				<td>${index + 1}</td>
 				<td>${book.title}</td>
 				<td>${book.author.authorName}</td>
-				<td>${book.publisher}</td>
+				<td>${book.publisher.name}</td>
 				<td>${book.category.name}</td>
 				<td>${book.status}</td>
 				<td>
@@ -1459,6 +1476,7 @@ const DOM = {
 		DOM.selectBookLoanFriend.innerHTML = ""
 		DOM.selectBookAuthor.innerHTML = ""
 		DOM.selectBookCategory.innerHTML = ""
+		DOM.selectBookPublisher.innerHTML = ""
 	},
 
 	resetModal(modal) {
@@ -1468,6 +1486,9 @@ const DOM = {
 				break
 			case DOM.modalOverlay.categories:
 				DOM.resetModalCategory()
+				break
+			case DOM.modalOverlay.publishers:
+				DOM.resetModalPublisher()	
 				break
 			case DOM.modalOverlay.authors:
 				DOM.resetModalAuthor()
@@ -1504,6 +1525,7 @@ const DOM = {
 		DOM.clearSelect()
 		Author.get().forEach(DOM.createBookAuthorSelect)
 		Category.get().forEach(DOM.createBookCategorySelect)
+		Publisher.get().forEach(DOM.createBookPublisherSelect)
 	},
 
 	callBooksTable() {
