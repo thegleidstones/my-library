@@ -143,7 +143,9 @@ const Publisher = {
 	},
 
 	update(publisher) {
-
+		Publisher.get()[publisher.id] = publisher
+		Storage.setPublishers(Publisher.get())
+		DOM.callPublishersTable()
 	}
 }
 
@@ -353,6 +355,7 @@ FormBooks = {
 				Book.add(book)
 				FormBooks.clearFields()
 			} else {
+				book.id = Number(book.id)
 				FormBooks.validateFields();
 				Book.update(book)
 				FormBooks.clearFields()
@@ -399,6 +402,7 @@ FormCategories = {
 				Category.add(category)
 				FormCategories.clearFields()
 			} else {
+				category.id = Number(category.id)
 				FormCategories.validateFields()
 				Category.update(category)
 				FormCategories.clearFields()
@@ -446,7 +450,10 @@ FormPublishers = {
 				Publisher.add(publisher)
 				FormPublishers.clearFields()
 			} else {
-
+				publisher.id = Number(publisher.id)
+				FormPublishers.validateFields()
+				Publisher.update(publisher)
+				FormPublishers.clearFields()
 			}
 		} catch (error) {
 			alert(error)
@@ -493,6 +500,7 @@ FormAuthors = {
 				Author.add(author);
 				FormAuthors.clearFields()
 			} else {
+				author.id = Number(author.id)
 				FormAuthors.validateFields()
 				Author.update(author);
 				FormAuthors.clearFields()
@@ -555,6 +563,7 @@ FormFriends = {
 				Friend.add(friend)
 				FormFriends.clearFields()
 			} else {
+				friend.id = Number(friend.id)
 				FormFriends.validateFields()
 				Friend.update(friend)
 				FormFriends.clearFields()
@@ -609,6 +618,7 @@ FormWishlist = {
 				Wishlist.add(wishlist)
 				FormWishlist.clearFields()
 			} else {
+				wishlist.id = Number(wishlist.id)
 				FormWishlist.validateFields()
 				Wishlist.update(wishlist)
 				FormWishlist.clearFields()
@@ -716,7 +726,7 @@ FormBookLoans = {
 			} else {
 				FormBookLoans.validateFieldsReturn()
 				let bookLoan = FormBookLoans.createObjectBookLoanReturn()
-				console.log(bookLoan)
+				b
 				BookLoan.bookLoanReturn(bookLoan)
 				FormBookLoans.clearFields()
 			}
@@ -865,6 +875,26 @@ const DOM = {
 		headTextCategory.innerHTML = "Nova Categoria"
 
 		FormCategories.clearFields()
+	},
+
+	editPublisher(index) {
+		const publisher = Publisher.get()[index]
+		const headTextPublisher = document.querySelector('h2#headTextPublisher')
+
+		Modal.open(DOM.modalOverlay.publishers)
+
+		headTextPublisher.innerHTML = "Alteração de Editora"
+
+		FormPublishers.publisherId.value = Number(publisher.id)
+		FormPublishers.publisherName.value = publisher.name
+	},
+
+	resetModalPublisher() {
+		const headTextPublisher = document.querySelector('h2#headTextPublisher')
+
+		headTextPublisher.innerHTML = "Nova Editora"
+
+		FormPublishers.clearFields()
 	},
 
 	editAuthor(index) {
