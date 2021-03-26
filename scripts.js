@@ -138,7 +138,8 @@ const Publisher = {
 	},
 
 	remove(index) {
-
+		this.publishers.splice(index, 1)
+		DOM.callPublishersTable()
 	},
 
 	update(publisher) {
@@ -1270,7 +1271,6 @@ const DOM = {
 				</i>
 			</td>
 		`
-
 		return html
 	},
 
