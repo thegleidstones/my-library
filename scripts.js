@@ -764,7 +764,14 @@ const DOM = {
 			<th>Descrição</th>
 			<th></th>
 			<th></th>
-		`,			
+		`,
+		publishers:
+		`
+			<th></th>
+			<th>Nome Editora</th>
+			<th></th>
+			<th></th>
+		`,
 		authors:
 			`
 				<th></th>
@@ -1056,6 +1063,19 @@ const DOM = {
 		DOM.tableBodyContainer.appendChild(trBody)
 	},
 
+	createPublisherTable(publisher, index) {
+		if (index === 0) {
+			const trHead = document.createElement('tr')
+			trHead.innerHTML = DOM.tableHeads.publishers
+			DOM.tableHeadContainer.appendChild(trHead)
+		}
+
+		const trBody = document.createElement('tr')
+		trBody.innerHTML = DOM.createPublisherTableData(publisher, index)
+		DOM.tableBodyContainer.appendChild(trBody)
+
+	},
+
 	createAuthorTable(author, index) {
 		if (index === 0) {
 			const trHead = document.createElement('tr')
@@ -1224,6 +1244,33 @@ const DOM = {
 				</i>
 			</td>
 		`
+		return html
+	},
+
+	createPublisherTableData(publisher, index) {
+		const html = `
+			<td>${index + 1}</td>
+			<td>${publisher.name}</td>
+			<td>
+				<i 
+					class="fa fa-pencil-square btn-edit" 
+					title="Clique para editar o registro"
+					onclick="DOM.editPublisher(${index})" 
+					aria-hidden="true"
+				>
+				</i>
+			</td>
+			<td>
+				<i 
+					class="fa fa-minus-square btn-remove" 
+					title="Clique para excluir o registro" 
+					onclick="Publisher.remove(${index})" 
+					aria-hidden="true"
+				>
+				</i>
+			</td>
+		`
+
 		return html
 	},
 
@@ -1447,7 +1494,7 @@ const DOM = {
 
 	callPublishersTable() {
 		DOM.clearTable()
-		//Publisher.get().forEach(DOM.createPublisherTable)
+		Publisher.get().forEach(DOM.createPublisherTable)
 		Storage.setPublishers(Publisher.get())
 		Modal.close(DOM.modalOverlay.publishers)
 		DOM.toggleActiveCard(DOM.cards.publisher)
