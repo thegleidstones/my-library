@@ -17,7 +17,7 @@
 <br>
 
 <p align="center">
-  <img alt="my-library" src=".github/my-library-full.png" width="100%">
+  <img alt="my-library" src=".github/my-library-full.PNG" width="100%">
 </p>
 
 ## 🚀 Tecnologias
